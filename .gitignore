@@ -1,0 +1,6 @@
+# raw assets that are large binaries
+raw/assets/*
+!raw/assets/.gitkeep
+# local cache / editor noise
+.DS_Store
+*.swp
