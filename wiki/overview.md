@@ -39,3 +39,7 @@ This is a personal knowledge base built on two complementary ideas:
 - `analyses/` — reserved for comparison/synthesis pages you produce over time.
 
 See the [index](index.md) for the full catalog.
+
+## Integrated corpora
+
+* [The Art of Assembly Language](/concepts/art_of_assembly/index.md) — 25 chapter summaries integrated from PDFs in `raw/art_of_assembly/`.

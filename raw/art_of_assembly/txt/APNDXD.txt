@@ -1,0 +1,2522 @@
+Appendix D: Instruction Set Reference
+                         This section provides encodings and approximate cycle times for all instructions that you would nor-
+                   mally execute in real mode on an Intel processor. Missing are the special instructions on the 80286 and
+                   later processors that manipulate page tables, segment descriptors, and other instructions that only an oper-
+                   ating system should use. The cycle times are approximate. To determine exact execution times, you will
+                   need to run an experiment. The cycle times are given for comparison purposes only.
+                       Key to special bits in encodings:
+        x:                  Don’t care. Can be zero or one.
+        s:                  Sign extension bit for immediate operands. If zero, immediate operand is 16 or 32 bits depend-
+                            ing on destination operand size. If s bit is one, then the immediate operand is eight bits and the
+                            CPU sign extends to 16 or 32 bits, as appropriate.
+        rrr:                Same as reg field in [mod-reg-r/m] byte.
+
+        Other Notes:
+
+        [disp]              This field can be zero, one, two, or four bytes long as required by the instruction.
+        [imm]               This field is one byte long if the operand is an eight bit operand or if the s bit in the instruction
+                            opcode is one. It is two or four bytes long if the s bit contains zero and the destination operand
+                            is 16 or 32 bits, respectively.
+        [mod-reg-r/m]:      Instructions that have a mod-reg-r/m byte may have a scaled index byte (sib) and a zero, one,
+                            two, or four byte displacement. See Appendix E for details concerning the encoding of this por-
+                            tion of the instruction.
+        reg,reg             Many instructions allow two operands using a [mod-reg-r/m] byte. A single direction bit in the
+                            opcode determines whether the instruction treats the reg operand as the destination or the mod-
+                            r/m operand as the destination (e.g., mov reg,mem vs. mov mem,reg). Such instructions also
+                            allow two register operands. It turns out there are two encodings for each such reg-reg instruc-
+                            tion. That is, you can encode an instruction like mov ax, bx with ax encoded in the reg field and
+                            bx encoded in the mod-r/m field, or you can encode it with bx encoded in the reg field and ax
+                            encoded in the mod-r/m field. Such instructions always have an x bit in the opcode. If the x bit
+                            is zero, the destination is the register specified by the mod-r/m field. If the x bit is one, the desti-
+                            nation is the register specified by the reg field. Other types of instructions support multiple
+                            encodings for similar reasons.
+
+
+                                 Table 97: 80x86 Instruction Set Referencea
+
+                              Encoding                                   Execution Time in Cyclesc
+       Instruction
+                               (bin)b            8088          8086          80286          80386          80486        Pentium
+aaa                        0011 0111               8             8              3              4              3             3
+aad                        1101 0101              60             60            14             19             14             10
+                           0000 1010
+aam                        1101 0100              83             83            16             17             15             18
+                           0000 1010
+aas                        0011 1111               8             8              3              4             3              3
+adc reg8, reg8             0001 00x0               3             ‘3             2              2             1              1
+                           [11-reg-r/m]
+adc reg16, reg16           0001 00x1               3             3              2              2             1              1
+                           [11-reg-r/m]
+
+
+
+
+                                                                                                                       Page 1361
+
+                              Thi d          t           t d ith F        M k       402
+Appendix D
+
+                          Table 97: 80x86 Instruction Set Referencea
+
+                       Encoding                      Execution Time in Cyclesc
+       Instruction
+                        (bin)b       8088     8086      80286       80386        80486   Pentium
+adc reg32, reg32     0110 0110         3       3           2          2            1        1
+                     0001 00x1
+                     [11-reg-r/m]
+adc reg8, mem8       0001 0010       9+EA     9+EA         7          6            2        2
+                     [mod-reg-r/m]
+adc reg16, mem16     0001 0011       13+EA    9+EA         7          6            2        2
+                     [mod-reg-r/m]
+adc reg32, mem32     0110 0110         -       -           -          6            2        2
+                     0001 0011
+                     [mod-reg-r/m]
+adc mem8, reg8       0001 0000       16+EA   16+EA         7          7            3        3
+                     [mod-reg-r/m]
+adc mem16, reg16     0001 0001       24+EA   16+EA         7          7            3        3
+                     [mod-reg-r/m]
+adc mem32, reg32     0110 0110         -       -           -          7            3        3
+                     0001 0001
+                     [mod-reg-r/m]
+adc reg8, imm8       1000 00x0         4       4           3          2            1        1
+                     [11-010-r/m]
+                     [imm]
+adc reg16, imm16     1000 00s0         4       4           3          2            1        1
+                     [11-010-r/m]
+                     [imm]
+adc reg32, imm32     0110 0110         4       4           3          2            1        1
+                     1000 00s0
+                     [11-010-r/m]
+                     [imm]
+adc mem8, imm8       1000 00x0       17+EA   17+EA         7          7            3        3
+                     [mod-010-r/m]
+                     [imm]
+adc mem16, imm16     1000 00s1       23+EA   17+EA         7          7            3        3
+                     [mod-010-r/m]
+                     [imm]
+adc mem32, imm32     0110 0110         -       -           -          7            3        3
+                     1000 00s1
+                     [mod-010-r/m]
+                     [imm]
+adc al, imm          0001 0100         4       4           3          2            1        1
+                     [imm]
+adc ax, imm          0001 0101         4       4           3          2            1        1
+                     [imm]
+adc eax, imm         0110 0110         -       -           -          2            1        1
+                     0001 0101
+                     [imm]
+add reg8, reg8       0000 00x0         3       ‘3          2          2            1        1
+                     [11-reg-r/m]
+add reg16, reg16     0000 00x1         3       3           2          2            1        1
+                     [11-reg-r/m]
+add reg32, reg32     0110 0110         3       3           2          2            1        1
+                     0000 00x1
+                     [11-reg-r/m]
+
+
+Page 1362
+                                                                                         Appendices
+
+                          Table 97: 80x86 Instruction Set Referencea
+
+                       Encoding                      Execution Time in Cyclesc
+       Instruction
+                        (bin)b       8088     8086      80286       80386        80486    Pentium
+add reg8, mem8       0000 0010       9+EA     9+EA         7          6            2         2
+                     [mod-reg-r/m]
+add reg16, mem16     0000 0011       13+EA    9+EA         7          6            2         2
+                     [mod-reg-r/m]
+add reg32, mem32     0110 0110         -       -           -          6            2         2
+                     0000 0011
+                     [mod-reg-r/m]
+add mem8, reg8       0000 0000       16+EA   16+EA         7          7            3         3
+                     [mod-reg-r/m]
+add mem16, reg16     0000 0001       24+EA   16+EA         7          7            3         3
+                     [mod-reg-r/m]
+add mem32, reg32     0110 0110         -       -           -          7            3         3
+                     0000 0001
+                     [mod-reg-r/m]
+add reg8, imm8       1000 00x0         4       4           3          2            1         1
+                     [11-000-r/m]
+                     [imm]
+add reg16, imm16     1000 00s0         4       4           3          2            1         1
+                     [11-000-r/m]
+                     [imm]
+add reg32, imm32     0110 0110         4       4           3          2            1         1
+                     1000 00s0
+                     [11-000-r/m]
+                     [imm]
+add mem8, imm8       1000 00x0       17+EA   17+EA         7          7            3         3
+                     [mod-000-r/m]
+                     [imm]
+add mem16, imm16     1000 00s1       23+EA   17+EA         7          7            3         3
+                     [mod-000-r/m]
+                     [imm]
+add mem32, imm32     0110 0110         -       -           -          7            3         3
+                     1000 00s1
+                     [mod-000-r/m]
+                     [imm]
+add al, imm          0000 0100         4       4           3          2            1         1
+                     [imm]
+add ax, imm          0000 0101         4       4           3          2            1         1
+                     [imm]
+add eax, imm         0110 0110         -       -           -          2            1         1
+                     0000 0101
+                     [imm]
+and reg8, reg8       0010 00x0         3       ‘3          2          2            1         1
+                     [11-reg-r/m]
+and reg16, reg16     0010 00x1         3       3           2          2            1         1
+                     [11-reg-r/m]
+and reg32, reg32     0110 0110         3       3           2          2            1         1
+                     0010 00x1
+                     [11-reg-/rm]
+and reg8, mem8       0010 0010       9+EA     9+EA         7          6            2         2
+                     [mod-reg-r/m]
+
+
+
+
+                                                                                          Page 1363
+Appendix D
+
+                          Table 97: 80x86 Instruction Set Referencea
+
+                       Encoding                      Execution Time in Cyclesc
+       Instruction
+                        (bin)b       8088     8086      80286        80386        80486   Pentium
+and reg16, mem16     0010 0011       13+EA    9+EA         7            6           2        2
+                     [mod-reg-r/m]
+and reg32, mem32     0110 0110         -       -           -            6           2        2
+                     0010 0011
+                     [mod-reg-r/m]
+and mem8, reg8       0010 0000       16+EA   16+EA         7            7           3        3
+                     [mod-reg-r/m]
+and mem16, reg16     0010 0001       24+EA   16+EA         7            7           3        3
+                     [mod-reg-r/m]
+and mem32, reg32     0110 0110         -       -           -            7           3        3
+                     0010 0001
+                     [mod-reg-r/m]
+and reg8, imm8       1000 00x0         4       4           3            2           1        1
+                     [11-100-r/m]
+                     [imm]
+and reg16, imm16     1000 00s1         4       4           3            2           1        1
+                     [11-100-r/m]
+                     [imm]
+and reg32, imm32     0110 0110         4       4           3            2           1        1
+                     1000 00s1
+                     [11-100-r/m]
+                     [imm]
+and mem8, imm8       1000 00x0       17+EA   17+EA         7            7           3        3
+                     [mod-100-r/m]
+                     [imm]
+and mem16, imm16     1000 00s1       23+EA   17+EA         7            7           3        3
+                     [mod-100-r/m]
+                     [imm]
+and mem32, imm32     0110 0110         -       -           -            7           3        3
+                     1000 00s1
+                     [mod-100-r/m]
+                     [imm]
+and al, imm          0010 0100         4       4           3            2           1        1
+                     [imm]
+and ax, imm          0010 0101         4       4           3            2           1        1
+                     [imm]
+and eax, imm         0110 0110         -       -           -            2           1        1
+                     0010 0101
+                     [imm]
+bound reg16, mem32   0110 0010                             13          10           7        8
+                     [mod-reg-r/m]                      (values
+                                                        within
+                                                         range)
+bound reg32, mem64   0110 0110                                         10           7        8
+                     0110 0010                                      (values
+                     [mod-reg-r/m]                                  within
+                                                                     range)
+bsf reg16, reg16     0000 1111                                      10+3*n        6-42     6-34
+                     1011 1100                                     n= first set
+                     [11-reg-r/m]                                      bit.
+
+
+
+
+Page 1364
+                                                                                          Appendices
+
+                          Table 97: 80x86 Instruction Set Referencea
+
+                       Encoding                      Execution Time in Cyclesc
+       Instruction
+                        (bin)b       8088     8086      80286        80386        80486    Pentium
+bsf reg32, reg32     0110 0110                                      10+3*n        6-42       6-42
+                     0000 1111                                     n= first set
+                     1011 1100                                         bit.
+                     [11-reg-r/m]
+bsf reg16, mem16     0000 1111                                      10+3*n        7-43       6-35
+                     1011 1100                                     n= first set
+                     [mod-reg-r/m]                                     bit.
+bsf reg32, mem32     0110 0110                                      10+3*n        7-43       6-43
+                     0000 1111                                     n= first set
+                     1011 1100                                         bit.
+                     [mod-reg-r/m]
+bsr reg16, reg16     0000 1111                                      10+3*n        7-100      7-39
+                     1011 1101                                     n= first set
+                     [11-reg-r/m]                                      bit.
+bsr reg32, reg32     0110 0110                                      10+3*n        8-100      7-71
+                     0000 1111                                     n= first set
+                     1011 1101                                         bit.
+                     [11-reg-r/m]
+bsr reg16, mem16     0000 1111                                      10+3*n        7-101      7-40
+                     1011 1101                                     n= first set
+                     [mod-reg-r/m]                                     bit.
+bsr reg32, mem32     0110 0110                                      10+3*n        8-101      7-72
+                     0000 1111                                     n= first set
+                     1011 1101                                         bit.
+                     [mod-reg-r/m]
+bswap reg32          0000 1111                                                      1         1
+                     11001rrr
+bt reg16, reg16      0000 1111                                          3           3         4
+                     1010 0011
+                     [11-reg-r/m]
+bt reg32, reg32      0110 0110                                          3           3         4
+                     0000 1111
+                     1010 0011
+                     [11-reg-r/m]
+bt mem16, reg16      0000 1111                                         12           8         9
+                     1010 0011
+                     [mod-reg-r/m]
+bt mem32, reg32      0110 0110                                         12           8         9
+                     0000 1111
+                     1010 0011
+                     [mod-reg-r/m]
+bt reg16, imm        0000 1111                                          3           3         4
+                     1011 1010
+                     [11-100-r/m]
+                     [imm8]
+bt reg32, imm        0110 0110                                          3           3         4
+                     0000 1111
+                     1011 1010
+                     [11-100-r/m]
+                     [imm8]
+bt mem16, imm        0000 1111                                          6           3         4
+                     1011 1010
+                     [mod-100-r/m]
+
+
+                                                                                           Page 1365
+Appendix D
+
+                          Table 97: 80x86 Instruction Set Referencea
+
+                       Encoding                      Execution Time in Cyclesc
+       Instruction
+                        (bin)b       8088     8086      80286       80386        80486   Pentium
+bt mem32, imm        0110 0110                                        6            3        4
+                     0000 1111
+                     1011 1010
+                     [mod-100-r/m]
+btc reg16, reg16     0000 1111                                        6            6        7
+                     1011 1011
+                     [11-reg-r/m]
+btc reg32, reg32     0110 0110                                        6            6        7
+                     0000 1111
+                     1011 1011
+                     [11-reg-r/m]
+btc mem16, reg16     0000 1111                                        13          13       13
+                     1011 1011
+                     [mod-reg-r/m]
+btc mem32, reg32     0110 0110                                        13          13       13
+                     0000 1111
+                     1011 1011
+                     [mod-reg-r/m]
+btc reg16, imm       0000 1111                                        6            6        7
+                     1011 1010
+                     [11-111-r/m]
+                     [imm8]
+btc reg32, imm       0110 0110                                        6            6        7
+                     0000 1111
+                     1011 1010
+                     [11-111-r/m]
+                     [imm8]
+btc mem16, imm       0000 1111                                        8            8        8
+                     1011 1010
+                     [mod-111-r/m]
+                     [imm8]
+btc mem32, imm       0110 0110                                        8            8        8
+                     0000 1111
+                     1011 1010
+                     [mod-111-r/m]
+                     [imm8]
+btr reg16, reg16     0000 1111                                        6            6        7
+                     1011 0011
+                     [11-reg-r/m]
+btr reg32, reg32     0110 0110                                        6            6        7
+                     0000 1111
+                     1011 0011
+                     [11-reg-r/m]
+btr mem16, reg16     0000 1111                                        13          13       13
+                     1011 0011
+                     [mod-reg-r/m]
+btr mem32, reg32     0110 0110                                        13          13       13
+                     0000 1111
+                     1011 0011
+                     [mod-reg-r/m]
+
+
+
+
+Page 1366
+                                                                                          Appendices
+
+                           Table 97: 80x86 Instruction Set Referencea
+
+                        Encoding                      Execution Time in Cyclesc
+        Instruction
+                         (bin)b       8088     8086      80286       80386        80486    Pentium
+btr reg16, imm        0000 1111                                        6            6         7
+                      1011 1010
+                      [11-110-r/m]
+                      [imm8]
+btr reg32, imm        0110 0110                                        6            6         7
+                      0000 1111
+                      1011 1010
+                      [11-110-r/m]
+                      [imm8]
+btr mem16, imm        0000 1111                                        8            8         8
+                      1011 1010
+                      [mod-110-r/m]
+                      [imm8]
+btr mem32, imm        0110 0110                                        8            8         8
+                      0000 1111
+                      1011 1010
+                      [mod-110-r/m]
+                      [imm8]
+bts reg16, reg16      0000 1111                                        6            6         7
+                      1010 1011
+                      [11-reg-r/m]
+bts reg32, reg32      0110 0110                                        6            6         7
+                      0000 1111
+                      1010 1011
+                      [11-reg-r/m]
+bts mem16, reg16      0000 1111                                        13          13         13
+                      1010 1011
+                      [mod-reg-r/m]
+bts mem32, reg32      0110 0110                                        13          13         13
+                      0000 1111
+                      1010 1011
+                      [mod-reg-r/m]
+bts reg16, imm        0000 1111                                        6            6         7
+                      1011 1010
+                      [11-101-r/m]
+                      [imm8]
+bts reg32, imm        0110 0110                                        6            6         7
+                      0000 1111
+                      1011 1010
+                      [11-101-r/m]
+                      [imm8]
+bts mem16, imm        0000 1111                                        8            8         8
+                      1011 1010
+                      [mod-101-r/m]
+                      [imm8]
+bts mem32, imm        0110 0110                                        8            8         8
+                      0000 1111
+                      1011 1010
+                      [mod-101-r/m]
+                      [imm8]
+call near             1110 1000        23       19        7-10        7-10          3         1
+                      [disp16]
+
+
+
+
+                                                                                           Page 1367
+Appendix D
+
+                              Table 97: 80x86 Instruction Set Referencea
+
+                           Encoding                      Execution Time in Cyclesc
+           Instruction
+                            (bin)b       8088     8086      80286       80386        80486   Pentium
+call far                 1001 1010        36       28        13-16       17-20        18        4
+                         [offset]
+                         [segment]
+call reg16               1111 1111        20       16        7-10        7-10          5        2
+                         [11-010-r/m]
+call mem16               1111 1111       29+EA   21+EA       11-14       10-13         5        2
+                         [mod-010-r/m]
+call mem32               1111 1111       53+EA   37+EA       16-19       22-25        17        5
+                         [mod-011-r/m]
+cbw                      1001 1000         2       2           2          3            3        3
+cdq                      0110 0110                                        2            2        2
+                         1001 1001
+clc                      1111 1000         2       2           2          2            2        2
+cld                      1111 1100         2       2           2          2            2        2
+cli                      1111 1010         2       2           3                       5        7
+cmc                      1111 0101         2       2           2          2            2        2
+cmp reg8, reg8           0011 10x0         3       ‘3          2          2            1        1
+                         [11-reg-r/m]
+cmp reg16, reg16         0011 10x1         3       3           2          2            1        1
+                         [11-reg-r/m]
+cmp reg32, reg32         0110 0110         3       3           2          2            1        1
+                         0011 10x1
+                         [11-reg-/rm]
+cmp reg8, mem8           0011 1010       9+EA     9+EA         7          6            2        2
+                         [mod-reg-r/m]
+cmp reg16, mem16         0011 1011       13+EA    9+EA         7          6            2        2
+                         [mod-reg-r/m]
+cmp reg32, mem32         0110 0110         -       -           -          6            2        2
+                         0011 1011
+                         [mod-reg-r/m]
+cmp mem8, reg8           0011 1000       9+EA     9+EA         7          6            2        2
+                         [mod-reg-r/m]
+cmp mem16, reg16         0011 1001       13+EA    9+EA         7          6            2        2
+                         [mod-reg-r/m]
+cmp mem32, reg32         0110 0110         -       -           -          6            2        2
+                         0011 1001
+                         [mod-reg-r/m]
+cmp reg8, imm8           1000 00x0         4       4           3          2            1        1
+                         [11-111-r/m]
+                         [imm]
+cmp reg16, imm16         1000 00s0         4       4           3          2            1        1
+                         [11-111-r/m]
+                         [imm]
+cmp reg32, imm32         0110 0110         4       4           3          2            1        1
+                         1000 00s0
+                         [11-111-r/m]
+                         [imm]
+cmp mem8, imm8           1000 00x0       10+EA   10+EA         6          5            2        2
+                         [mod-111-r/m]
+                         [imm]
+
+
+Page 1368
+                                                                                                          Appendices
+
+                             Table 97: 80x86 Instruction Set Referencea
+
+                          Encoding                              Execution Time in Cyclesc
+        Instruction
+                           (bin)b         8088         8086        80286       80386         80486         Pentium
+cmp mem16, imm16       1000 00s1         14+EA        10+EA           6          5              2             2
+                       [mod-111-r/m]
+                       [imm]
+cmp mem32, imm32       0110 0110             -           -            -          5              2             2
+                       1000 00s1
+                       [mod-111-r/m]
+                       [imm]
+cmp al, imm            0011 1100            4           4             3          2              1             1
+                       [imm]
+cmp ax, imm            0011 1101            4           4             3          2              1             1
+                       [imm]
+cmp eax, imm           0110 0110             -           -            -          2              1             1
+                       0011 1101
+                       [imm]
+cmpsb                  1010 0110            30          22            8          10             8             5
+cmpsw                  1010 0111            30          22            8          10             8             5
+cmpsd                  0110 0110             -           -            -          10             8             5
+                       1010 0111
+repe cmpsb             1111 0011         9+17*cx      9+17*cx      5+9*cx      5+9*cx        7+7*cx         9+4*cx
+                       1010 0110         cx = # of                                          5 if cx=0      7 if cx=0
+                                        repetitions
+repne cmpsb            1111 0010        9+17*cx       9+17*cx      5+9*cx      5+9*cx        7+7*cx         9+4*cx
+                       1010 0110                                                            5 if cx=0      7 if cx=0
+repe cmpsw             1111 0011        9+25*cx       9+17*cx      5+9*cx      5+9*cx        7+7*cx         9+4*cx
+                       1010 0111                                                            5 if cx=0      7 if cx=0
+repne cmpsw            1111 0010        9+25*cx       9+17*cx      5+9*cx      5+9*cx        7+7*cx         9+4*cx
+                       1010 0111                                                            5 if cx=0      7 if cx=0
+repe cmpsd             0110 0110             -           -            -        5+9*cx        7+7*cx         9+4*cx
+                       1111 0011                                                            5 if cx=0      7 if cx=0
+                       1010 0111
+repne cmpsd            0110 0110             -           -            -        5+9*cx        7+7*cx         9+4*cx
+                       1111 0010                                                            5 if cx=0      7 if cx=0
+                       1010 0111
+cmpxchg reg8, reg8     0000 1111             -           -            -           -             6             6
+                       1011 0000
+                       [11-reg-r/m]
+                       Note: r/m is
+                       first register
+                       operand.
+cmpxchg reg16, reg16   0000 1111             -           -            -           -             6             6
+                       1011 0001
+                       [11-reg-r/m]
+cmpxchg reg32, reg32   0110 0110             -           -            -           -             6             6
+                       0000 1111
+                       1011 0001
+                       [11-reg-r/m]
+cmpxchg mem8, reg8     0000 1111             -           -            -           -         7 if equal,       6
+                       1011 0000                                                             10 if not
+                       [mod-reg-r/m]                                                           equal
+
+
+
+
+                                                                                                           Page 1369
+Appendix D
+
+                            Table 97: 80x86 Instruction Set Referencea
+
+                         Encoding                                Execution Time in Cyclesc
+        Instruction
+                          (bin)b         8088         8086          80286       80386         80486        Pentium
+cmpxchg mem16, reg16   0000 1111            -           -              -           -         7 if equal,      6
+                       1011 0001                                                              10 if not
+                       [mod-reg-r/m]                                                            equal
+
+cmpxchg mem32, reg32   0110 0110            -           -              -           -         7 if equal,      6
+                       0000 1111                                                              10 if not
+                       1011 0001                                                                equal
+                       [mod-reg-r/m]
+cmpxchg8b mem64        0000 1111            -           -              -           -              -          10
+                       1100 0111
+                       [mod-001-r/m]
+cpuid                  0000 1111            -           -              -           -              -          14
+                       1010 0010
+cwd                    1001 1001           5            5              2          2              3            2
+cwde                   0110 0110                                                  3              3            3
+                       1001 1000
+daa                    0010 0111           4            4              3          4              2            3
+das                    0010 1111           4            4              3          4              2            3
+dec reg8               1111 1110           3            3              2          2              1            1
+                       [11-001-r/m]
+dec reg16              0100 1rrr           3            3              2          2              1            1
+dec reg16              1111 1111           3            3              2          2              1            1
+(alternate encoding)   [11-001-r/m]
+dec reg32              0110 0110           3            3              2          2              1            1
+                       0100 1rrr
+dec reg32              0110 0110           3            3              2          2              1            1
+(alternate encoding)   1111 1111
+                       [11-001-r/m]
+dec mem8               1111 1110         15+EA       15+EA             7          6              3            3
+                       [mod-001-r/m]
+dec mem16              1111 1111         23+EA       15+EA             7          6              3            3
+                       [mod-001-r/m]
+dec mem32              0110 0110            -           -              -          6              3            3
+                       1111 1111
+                       [mod-001-r/m]
+div reg8               1111 0110         80-90        80-90           14          14             16          17
+                       [11-110-r/m]
+div reg16              1111 0111        144-162      144-162          22          22             24          25
+                       [11-110-r/m]
+div reg32              0110 0110            -           -              -          38             40          41
+                       1111 0111
+                       [11-110-r/m]
+div mem8               1111 0110        (86-96) +   (86-96) +         17          17             16          17
+                       [mod-110-r/m]       EA          EA
+div mem16              1111 0111       (158-176) + (150-168) +        25          25             24          25
+                       [mod-110-r/m]       EA          EA
+div mem32              0110 0110            -           -              -          41             40          41
+                       1111 0111
+                       [mod-110-r/m]
+
+
+
+Page 1370
+                                                                                                                     Appendices
+
+                                  Table 97: 80x86 Instruction Set Referencea
+
+                              Encoding                                    Execution Time in Cyclesc
+        Instruction
+                               (bin)b            8088         8086           80286         80386         80486        Pentium
+enter local, 0              1100 1000                                           11            10           14            11
+                            [locals-imm16]
+                            0000 0000
+enter local, 1              1100 1000                                           15            12           17            15
+                            [locals-imm16]
+                            0000 0001
+enter local, lex            1100 1000                                           12           15 +       17 + 3*lex    15 + 2*lex
+                            [locals:imm16]                                        +       4 * (lex-1)
+                            [lex:imm8]                                      4 * (lex-1)
+hlt                         1111 0100             2+d           2+              2+            5+           4+            12+
+idiv reg8                   1111 0110           101-112      101-112            17            19           19            22
+                            [11-111-r/m]
+idiv reg16                  1111 0111           165-184      165-184            25            27           27            30
+                            [11-111-r/m]
+idiv reg32                  0110 0110              -             -               -            43           43            46
+                            1111 0111
+                            [11-111-r/m]
+idiv mem8                   1111 0110          (107-118) + (107-118) +          20            22           20            30
+                            [mod-111-r/m]          EA          EA
+idiv mem16                  1111 0111          (175-194) + (171-190) +          28            30           28            30
+                            [mod-111-r/m]          EA          EA
+                            [disp]
+idiv mem32                  0110 0110              -             -               -            46           44            46
+                            1111 0111
+                            [mod-111-r/m]
+imul reg8                   1111 0110            80-98        80-98             13           9-14         13-18          11
+                            [11-101-r/m]
+imul reg16                  1111 0111           128-154      128-154            21           9-22         13-26          11
+                            [11-101-r/m]
+imul reg32                  0110 0110              -             -               -           9-38         13-42          11
+                            1111 0111
+                            [11-101-r/m]
+imul mem8                   1111 0110          (86-104) +   (107-118) +         16          12-17         13-18          11
+                            [mod-101-r/m]         EA            EA
+imul mem16                  1111 0111          (134-164) + (134-160) +          24          15-25         13-26          11
+                            [mod-101-r/m]          EA          EA
+imul mem32                  0110 0110              -             -               -          12-41         13-42          11
+                            1111 0111
+                            [mod-101-r/m]
+imul reg16, reg16, imm8     0110 1011              -             -              21          13-26         13-26          10
+imul reg16, imm8            [11-reg-r/m]
+(Second form assumes reg    [imm8]
+and r/m are the same,       (1st reg operand
+instruction sign extends    is specified by
+eight bit immediate oper-   reg field, 2nd
+and to 16 bits)             reg operand is
+                            specified by r/m
+                            field)
+imul reg16, reg16, imm      0110 1001              -             -              21           9-22         13-26          10
+imul reg16, imm             [11-reg-r/m]
+                            [imm16]
+
+
+
+                                                                                                                      Page 1371
+Appendix D
+
+                               Table 97: 80x86 Instruction Set Referencea
+
+                            Encoding                      Execution Time in Cyclesc
+        Instruction
+                             (bin)b       8088     8086      80286       80386        80486   Pentium
+imul reg32, reg32, imm8   0110 0110        -        -                     13-42       13-42     10
+imul reg32, imm8          0110 1011
+                          [11-reg-r/m]
+                          [imm8]
+imul reg32, reg32, imm    0110 0110        -        -           -         9-38        13-42     10
+imul reg32, imm           0110 1001
+                          [11-reg-r/m]
+                          [imm32]
+imul reg16,mem16,imm8 0110 1011            -        -          24         14-27       13-26     10
+                      [11-reg-r/m]
+                      [imm8]
+imul reg16,mem16,imm      0110 1001        -        -          24         12-25       13-26     10
+                          [11-reg-r/m]
+                          [imm16]
+imul reg32, mem32, imm8 0110 0110          -        -           -         14-43       13-42     10
+                        0110 1011
+                        [11-reg-r/m]
+                        [imm8]
+imul reg32, mem32, imm    0110 0110        -        -           -         12-41       13-42     10
+                          0110 1001
+                          [11-reg-r/m]
+                          [imm32]
+imul reg16, reg16         0000 1111        -        -           -         12-25       13-26     10
+                          1010 1111
+                          [11-reg-r/m]
+                          (reg is dest
+                          operand)
+imul reg32, reg32         0110 0110        -        -           -         12-41       12-42     10
+                          0000 1111
+                          1010 1111
+                          [11-reg-r/m]
+                          (reg is dest
+                          operand)
+imul reg16, mem16         0000 1111        -        -           -         15-28       13-26     10
+                          1010 1111
+                          [mod-reg-r/m]
+imul reg32, mem32         0110 0110        -        -           -         14-44       13-42     10
+                          0000 1111
+                          1010 1111
+                          [mod-reg-r/m]
+in al, port               1110 0100        10       10          5          12          14        7
+                          [port8]
+in ax, port               1110 0101        14       10          5          12          14        7
+                          [port8]
+in eax, port              0110 0110        -        -           -          12          14        7
+                          1110 0101
+                          [port8]
+in al, dx                 1110 1100        8        8           5          13          14        7
+in ax, dx                 1110 1101        12       8           5          13          14        7
+in eax, dx                0110 0110        12       8           5          13          14        7
+                          1110 1101
+
+
+
+
+Page 1372
+                                                                                                      Appendices
+
+                             Table 97: 80x86 Instruction Set Referencea
+
+                          Encoding                              Execution Time in Cyclesc
+          Instruction
+                           (bin)b          8088         8086       80286       80386        80486      Pentium
+inc reg8                1111 1110            3            2           2          2            1           1
+                        [11-000-r/m]
+inc reg16               0100 0rrr            3            3           2          2             1          1
+inc reg16               1111 1111            3            3           2          2            1           1
+(alternate encoding)    [11-000-r/m]
+inc reg32               0110 0110             -           -           -          2             1          1
+                        0100 0rrr
+inc reg32               0110 0110             -           -           -          2             1          1
+(alternate encoding)    1111 1111
+                        [11-000-r/m]
+inc mem8                1111 1110         15+EA         15+EA         7          6            3           3
+                        [mod-000-r/m]
+inc mem16               1111 1110         23+EA         15+EA         7          6            3           3
+                        [mod-000-r/m]
+                        [disp]
+inc mem32               0110 0110             -           -           -          6             3          3
+                        1111 1110
+                        [mod-000-r/m]
+insb                    1010 1010             -           -           5          15           17          9
+insw                    1010 1011             -           -           5          15           17          9
+insd                    0110 0110             -           -           -          15           17          9
+                        1010 1011
+rep insb                1111 0010             -           -       5 + 4*cx    14 + 6*cx     16+8*cx    11 + 3*cx
+                        1010 1010
+rep insw                1111 0010             -           -       5 + 4*cx    14 + 6*cx     16+8*cx    11 + 3*cx
+                        1010 1011
+rep insd                0110 0110             -           -           -       14 + 6*cx     16+8*cx    11 + 3*cx
+                        1111 0010
+                        1010 1011
+int nn                  1100 1101            71          51         23-26        37           30          16
+                        [imm8]
+int 03                  1100 1100            72          52         23-26        33           26          13
+into                    1100 1110        73 (if ovr)     53         24-27        35           28          13
+                                         4 (no ovr)       4           3           3            3           3
+iret                    1100 1111            44          32         17-20        22           15          8
+iretd                   0110 0110                                                22           15          10
+                        1100 1111
+ja short                0111 0111            16          16         7-10        7-10          3           1
+                        [disp8]         4 (not taken)     4          3           3            1
+ja near                 0000 1111             -           -           -         7-10          3           1
+                        1000 0111                                                3            1
+                        [disp16]
+jae short               0111 0011            16          16         7-10        7-10          3           1
+                        [disp8]         4 (not taken)     4          3           3            1
+jae near                0000 1111             -           -           -         7-10          3           1
+                        1000 0011                                                3            1
+                        [disp16]
+jb short                0111 0010            16          16         7-10        7-10          3           1
+                        [disp8]         4 (not taken)     4          3           3            1
+
+
+
+                                                                                                       Page 1373
+Appendix D
+
+                              Table 97: 80x86 Instruction Set Referencea
+
+                           Encoding                          Execution Time in Cyclesc
+           Instruction
+                            (bin)b       8088         8086      80286       80386        80486   Pentium
+jb near                  0000 1111          -          -           -         7-10          3        1
+                         1000 0010                                            3            1
+                         [disp16]
+jbe short                0111 0110         16          16        7-10        7-10          3        1
+                         [disp8]      4 (not taken)     4         3           3            1
+jbe near                 0000 1111          -          -           -         7-10          3        1
+                         1000 0110                                            3            1
+                         [disp16]
+jc short                 0111 0010         16          16        7-10        7-10          3        1
+                         [disp8]      4 (not taken)     4         3           3            1
+jc near                  0000 1111          -          -           -         7-10          3        1
+                         1000 0010                                            3            1
+                         [disp16]
+je short                 0111 0100         16          16        7-10        7-10          3        1
+                         [disp8]      4 (not taken)     4         3           3            1
+je near                  0000 1111          -          -           -         7-10          3        1
+                         1000 0100                                            3            1
+                         [disp16]
+jg short                 0111 1111         16          16        7-10        7-10          3        1
+                         [disp8]      4 (not taken)     4         3           3            1
+jg near                  0000 1111          -          -           -         7-10          3        1
+                         1000 1111                                            3            1
+                         [disp16]
+jge short                0111 1101         16          16        7-10        7-10          3        1
+                         [disp8]      4 (not taken)     4         3           3            1
+jge near                 0000 1111          -          -           -         7-10          3        1
+                         1000 1101                                            3            1
+                         [disp16]
+jl short                 0111 1100         16          16        7-10        7-10          3        1
+                         [disp8]      4 (not taken)     4         3           3            1
+jl near                  0000 1111          -          -           -         7-10          3        1
+                         1000 1100                                            3            1
+                         [disp16]
+jle short                0111 1110         16          16        7-10        7-10          3        1
+                         [disp8]      4 (not taken)     4         3           3            1
+jle near                 0000 1111          -          -           -         7-10          3       1
+                         1000 1110                                            3            1
+                         [disp16]
+jna short                0111 0110         16          16        7-10        7-10          3       1
+                         [disp8]      4 (not taken)     4         3           3            1
+jna near                 0000 1111          -          -           -         7-10          3       1
+                         1000 0110                                            3            1
+                         [disp16]
+jnae short               0111 0010         16          16        7-10        7-10          3       1
+                         [disp8]      4 (not taken)     4         3           3            1
+jnae near                0000 1111          -          -           -         7-10          3       1
+                         1000 0010                                            3            1
+                         [disp16]
+jnb short                0111 0011         16          16        7-10        7-10          3       1
+                         [disp8]      4 (not taken)     4         3           3            1
+
+
+
+Page 1374
+                                                                                              Appendices
+
+                           Table 97: 80x86 Instruction Set Referencea
+
+                        Encoding                          Execution Time in Cyclesc
+        Instruction
+                         (bin)b       8088         8086      80286       80386        80486    Pentium
+jnb near              0000 1111          -          -           -         7-10          3         1
+                      1000 0011                                            3            1
+                      [disp16]
+jnbe short            0111 0111         16          16        7-10        7-10          3         1
+                      [disp8]      4 (not taken)     4         3           3            1
+jnbe near             0000 1111          -          -           -         7-10          3         1
+                      1000 0111                                            3            1
+                      [disp16]
+jnc short             0111 0011         16          16        7-10        7-10          3         1
+                      [disp8]      4 (not taken)     4         3           3            1
+jnc near              0000 1111          -          -           -         7-10          3         1
+                      1000 0011                                            3            1
+                      [disp16]
+jne short             0111 0101         16          16        7-10        7-10          3         1
+                      [disp8]      4 (not taken)     4         3           3            1
+jne near              0000 1111          -          -           -         7-10          3         1
+                      1000 0101                                            3            1
+                      [disp16]
+jng short             0111 1110         16          16        7-10        7-10          3         1
+                      [disp8]      4 (not taken)     4         3           3            1
+jng near              0000 1111          -          -           -         7-10          3         1
+                      1000 1110                                            3            1
+                      [disp16]
+jnge short            0111 1100         16          16        7-10        7-10          3         1
+                      [disp8]      4 (not taken)     4         3           3            1
+jnge near             0000 1111          -          -           -         7-10          3         1
+                      1000 1100                                            3            1
+                      [disp16]
+jnl short             0111 1101         16          16        7-10        7-10          3         1
+                      [disp8]      4 (not taken)     4         3           3            1
+jnl near              0000 1111          -          -           -         7-10          3         1
+                      1000 1101                                            3            1
+                      [disp16]
+jnle short            0111 1111         16          16        7-10        7-10          3         1
+                      [disp8]      4 (not taken)     4         3           3            1
+jnle near             0000 1111          -          -           -         7-10          3         1
+                      1000 1111                                            3            1
+                      [disp16]
+jno short             0111 0001         16          16        7-10        7-10          3         1
+                      [disp8]      4 (not taken)     4         3           3            1
+jno near              0000 1111          -          -           -         7-10          3         1
+                      1000 0001                                            3            1
+                      [disp16]
+jnp short             0111 1011         16          16        7-10        7-10          3         1
+                      [disp8]      4 (not taken)     4         3           3            1
+jnp near              0000 1111          -          -           -         7-10          3         1
+                      1000 1011                                            3            1
+                      [disp16]
+jns short             0111 1001         16          16        7-10        7-10          3         1
+                      [disp8]      4 (not taken)     4         3           3            1
+
+
+
+                                                                                               Page 1375
+Appendix D
+
+                              Table 97: 80x86 Instruction Set Referencea
+
+                           Encoding                            Execution Time in Cyclesc
+           Instruction
+                            (bin)b         8088         8086      80286       80386        80486   Pentium
+jns near                 0000 1111            -          -           -         7-10          3        1
+                         1000 1001                                              3            1
+                         [disp16]
+jnz short                0111 0101           16          16        7-10        7-10          3        1
+                         [disp8]        4 (not taken)     4         3           3            1
+jnz near                 0000 1111            -          -           -         7-10          3        1
+                         1000 0101                                              3            1
+                         [disp16]
+jo short                 0111 0000           16          16        7-10        7-10          3        1
+                         [disp8]        4 (not taken)     4         3           3            1
+jo near                  0000 1111            -          -           -         7-10          3        1
+                         1000 0000                                              3            1
+                         [disp16]
+jp short                 0111 1010           16          16        7-10        7-10          3        1
+                         [disp8]        4 (not taken)     4         3           3            1
+jp near                  0000 1111            -          -           -         7-10          3        1
+                         1000 1010                                              3            1
+                         [disp16]
+jpe short                0111 1010           16          16        7-10        7-10          3        1
+                         [disp8]        4 (not taken)     4         3           3            1
+jpe near                 0000 1111            -          -           -         7-10          3        1
+                         1000 1010                                              3            1
+                         [disp16]
+jpo short                0111 1011           16          16        7-10        7-10          3        1
+                         [disp8]        4 (not taken)     4         3           3            1
+jpo near                 0000 1111            -          -           -         7-10          3        1
+                         1000 1011                                              3            1
+                         [disp16]
+js short                 0111 1000           16          16        7-10        7-10          3        1
+                         [disp8]        4 (not taken)     4         3           3            1
+js near                  0000 1111            -          -           -         7-10          3        1
+                         1000 1000                                              3            1
+                         [disp16]
+jz short                 0111 0100           16          16        7-10        7-10          3        1
+                         [disp8]        4 (not taken)     4         3           3            1
+jz near                  0000 1111            -          -           -         7-10          3       1
+                         1000 0100                                              3            1
+                         [disp16]
+jcxz short               1110 0011           18          18        8-11        9-12          8       6
+                         [disp8]        6 (not taken)     6         4           5            5       5
+jecxz short              0110 0110                                             9-12          8       6
+                         1110 0011                                              5            5       5
+                         [disp8]
+jmp short                1110 1011           15          15        7-10        7-10          3       1
+                         [disp8]
+jmp near                 1110 1001           15          15        7-10        7-10          3       1
+                         [disp16]
+jmp reg16                1111 1111           11          11        7-10        7-10          5       2
+                         [11-100-r/m]
+
+
+
+
+Page 1376
+                                                                                                       Appendices
+
+                              Table 97: 80x86 Instruction Set Referencea
+
+                          Encoding                                 Execution Time in Cyclesc
+          Instruction
+                           (bin)b             8088         8086       80286       80386        80486    Pentium
+jmp mem16               1111 1111            18+EA         18+EA       11-14       10-13         5         2
+                        [mod-100-r/m]
+jmp far                 1110 1010               15          15         11-14       12-15        17         3
+                        [offset16]
+                        [segment16]
+jmp mem32               1111 1111            24+EA         24+EA       15-18       43-46        13         2
+                        [mod-101-r/m]
+lahf                    1001 1111               4            4           2          2            3         2
+lds reg, mem32          1100 0101            24+EA         16+EA         7          7            6         4
+                        [mod-reg-r/m]
+lea reg, mem            1000 1101             2+EA         2+EA          3          2            1         1
+                        [mod-101-r/m]
+leave                   1100 1001                -           -           5          4            5         3
+les reg, mem32          1100 0100            24+EA         16+EA         7          7            6         4
+                        [mod-reg-r/m]
+lfs reg, mem32          0000 1111                -           -           -          7            6         4
+                        1011 0100
+                        [mod-reg-r/m]
+lgs reg, mem32          0000 1111                -           -           -          7            6         4
+                        1011 0101
+                        [mod-reg-r/m]
+lodsb                   1010 1100               12          12           5          5            5         2
+lodsw                   1010 1101               16          12           5          5            5         2
+loadsd                  0110 0110                -           -           -          5            5         2
+                        1010 1101
+loop short              1110 0010               17          17         8-11        11-14         7         5
+                        [disp8]            5 (not taken)     5          4                        6
+loope short             1110 0001               18          18         8-11        11-14         9         7
+loopz short             [disp8]            6 (not taken)     6          4                        6
+loopne short            1110 0000              19           19         8-11        11-14         9         7
+loopnz short            [disp8]            5(not taken)      5          4                        6
+lss reg, mem32          0000 1111                -           -           -          7            6         4
+                        1011 0010
+                        [mod-reg-r/m]
+mov reg8, reg8          1000 1000               2            2           2          2            1         1
+                        [11-reg-r/m]
+                        (r/m specifies
+                        destination reg)
+mov reg8, reg8          1000 1010               2            2           2          2            1         1
+(alternate encoding)    [11-reg-r/m]
+                        (reg specifies
+                        destination reg)
+mov reg16, reg16        1000 1001               2            2           2          2            1         1
+                        [11-reg-r/m]
+                        (r/m specifies
+                        destination reg)
+mov reg16, reg16        1000 1011               2            2           2          2            1         1
+(alternate encoding)    [11-reg-r/m]
+                        (reg specifies
+                        destination reg)
+
+
+
+                                                                                                        Page 1377
+Appendix D
+
+                             Table 97: 80x86 Instruction Set Referencea
+
+                         Encoding                         Execution Time in Cyclesc
+       Instruction
+                          (bin)b          8088    8086       80286       80386        80486   Pentium
+mov reg32, reg32       0110 0110            -       -           -          2            1        1
+                       1000 1001
+                       [11-reg-r/m]
+                       (r/m specifies
+                       destination reg)
+mov reg32, reg32       0110 0110            -       -           -          2            1        1
+(alternate encoding)   1000 1011
+                       [11-reg-r/m]
+                       (reg specifies
+                       destination reg)
+mov mem, reg8          1000 1000          9+EA    9+EA          3          2            1        1
+                       [mod-reg-r/m]
+mov reg8, mem          1000 1010          8+EA    8+EA          5          4            1        1
+                       [mod-reg-r/m]
+mov mem, reg16         1000 1001          13+EA   9+EA          3          2            1        1
+                       [mod-reg-r/m]
+mov reg16, mem         1000 1011          12+EA   8+EA          5          4            1        1
+                       [mod-reg-r/m]
+mov mem, reg32         0110 0110            -       -           -          2            1        1
+                       1000 1001
+                       [mod-reg-r/m]
+mov reg16, mem         0110 0110            -       -           -          4            1        1
+                       1000 1011
+                       [mod-reg-r/m]
+mov reg8, imm          1011 0rrr            4       4           2          2            1        1
+                       [imm8]
+mov reg8, imm          1100 0110           10      10           2          2            1        1
+(alternate encoding)   [11-000-r/m]
+                       [imm8]
+mov reg16, imm         1011 1rrr            4       4           2          2            1        1
+                       [imm16]
+mov reg16, imm         1100 0111           10      10           2          2            1        1
+(alternate encoding)   [11-000-r/m]
+                       [imm16]
+mov reg32, imm         0110 0110            -       -           -          2            1        1
+                       1011 1rrr
+                       [imm32]
+mov reg32, imm         0110 0110            -       -           -          2            1        1
+(alternate encoding)   1100 0111
+                       [11-000-r/m]
+                       [imm32]
+mov mem8, imm          1100 0110          10+EA   10+EA         3          2            1        1
+                       [mod-000-r/m]
+                       [imm8]
+mov mem16, imm         1100 0111          14+EA   10+EA         3          2            1        1
+                       [mod-000-r/m]
+                       [imm16]
+mov mem32, imm         1100 0111            -       -           -          2            1        1
+                       [mod-000-r/m]
+                       [imm32]
+mov al, disp           1010 0000           10      10           5          4            1        1
+                       [disp]
+
+
+Page 1378
+                                                                                                         Appendices
+
+                           Table 97: 80x86 Instruction Set Referencea
+
+                        Encoding                                Execution Time in Cyclesc
+        Instruction
+                         (bin)b         8088          8086         80286       80386         80486        Pentium
+mov ax, disp          1010 0001           14           10             5          4              1            1
+                      [disp]
+mov eax, disp         0110 0110            -            -             -          4              1            1
+                      1010 0001
+                      [disp]
+mov disp, al          1010 0010           10           10             3          2              1            1
+                      [disp]
+mov disp, ax          1010 0011           14           10             3          2              1            1
+                      [disp]
+mov disp, eax         0110 0110            -            -             -          2              1            1
+                      1010 0011
+                      [disp]
+mov segreg, reg16     1000 1110           2            2              2          2              3           2-3
+                      [11-sreg-r/m]
+mov segreg, mem       1000 1110        12+EA         8+EA             5          5              3            2-3
+                      [mod-reg-r/m]
+mov reg16, segreg     1000 1100           2            2              2          2              3            1
+                      [11-sreg-r/m]
+mov mem, segreg       1000 1100        13+EA         9+EA             3          2              3            1
+                      [mod-reg-r/m]
+movsb                 1010 0100           18           18             5          8              7            4
+movsw                 1010 0101           26           18             5          8              7            4
+movsd                 0110 0110            -            -             -          8              7            4
+                      1010 0101
+rep movsb             1111 0010       9 + 17 * cx   9 + 17*cx     5 + 4*cx    8 + 4*cx      12 + 3*cx     4 + 3*cx
+                      1010 0100                                                              5 if cx=0
+                                                                                            13 if cx=1
+rep movsw             1111 0010       9 + 25 * cx   9 + 17*cx     5 + 4*cx    8 + 4*cx      12 + 3*cx     4 + 3*cx
+                      1010 0101                                                              5 if cx=0
+                                                                                            13 if cx=1
+rep movsd             0110 0110            -            -             -       8 + 4*cx      12 + 3*cx     4 + 3*cx
+                      1111 0010                                                              5 if cx=0
+                      1010 0101                                                             13 if cx=1
+movsx reg16, reg8     0000 1111                                                  3              3            3
+                      1011 1110
+                      [11-reg-r/m]
+                      (dest is reg
+                      operand)
+movsx reg32, reg8     0110 0110                                                  3              3            3
+                      0000 1111
+                      1011 1110
+                      [11-reg-r/m]
+movsx reg32, reg16    0110 0110                                                  3              3            3
+                      0000 1111
+                      1011 1111
+                      [11-reg-r/m]
+movsx reg16, mem8     0000 1111                                                  6              3            3
+                      1011 1110
+                      [mod-reg-r/m]
+
+
+
+
+                                                                                                          Page 1379
+Appendix D
+
+                          Table 97: 80x86 Instruction Set Referencea
+
+                       Encoding                                Execution Time in Cyclesc
+       Instruction
+                        (bin)b         8088         8086          80286       80386        80486   Pentium
+movsx reg32, mem8    0110 0110                                                  6            3        3
+                     0000 1111
+                     1011 1110
+                     [mod-reg-r/m]
+movsx reg32, mem16   0110 0110                                                  6            3        3
+                     0000 1111
+                     1011 1111
+                     [mod-reg-r/m]
+movzx reg16, reg8    0000 1111                                                  3            3        3
+                     1011 0110
+                     [11-reg-r/m]
+                     (dest is reg
+                     operand)
+movzx reg32, reg8    0110 0110                                                  3            3        3
+                     0000 1111
+                     1011 0110
+                     [11-reg-r/m]
+movzx reg32, reg16   0110 0110                                                  3            3        3
+                     0000 1111
+                     1011 0111
+                     [11-reg-r/m]
+movzx reg16, mem8    0000 1111                                                  6            3        3
+                     1011 0110
+                     [mod-reg-r/m]
+movzx reg32, mem8    0110 0110                                                  6            3        3
+                     0000 1111
+                     1011 0110
+                     [mod-reg-r/m]
+movzx reg32, mem16   0110 0110                                                  6            3        3
+                     0000 1111
+                     1011 0111
+                     [mod-reg-r/m]
+mul reg8             1111 0110         70-77        70-77           13         9-14        13-18     11
+                     [11-100-r/m]
+mul reg16            1111 0111        118-133      118-133          21         9-22        13-26     11
+                     [11-100-r/m]
+mul reg32            0110 0110            -           -              -         9-38        13-42     10
+                     1111 0111
+                     [11-100-r/m]
+mul mem8             1111 0110        (76-83) +   (76-83) +         16         12-17       13-18     11
+                     [mod-100-r/m]       EA          EA
+mul mem16            1111 0111       (124-139) + (124-139) +        24         12-25       13-26     11
+                     [mod-100-r/m]       EA          EA
+mul mem32            0110 0110            -           -              -         12-41       13-42     10
+                     1111 0111
+                     [mod-100-r/m]
+neg reg8             1111 0110           3            3              2          2            1        1
+                     [11-011-r/m]
+neg reg16            1111 0111           3            3              2          2            1        1
+                     [11-011-r/m]
+
+
+
+
+Page 1380
+                                                                                            Appendices
+
+                             Table 97: 80x86 Instruction Set Referencea
+
+                          Encoding                      Execution Time in Cyclesc
+       Instruction
+                           (bin)b       8088     8086      80286       80386        80486    Pentium
+neg reg32               0110 0110         3       3           2          2            1         1
+                        1111 0111
+                        [11-011-r/m]
+neg mem8                1111 0110       16+EA   16+EA         7          6            3         3
+                        [mod-011-r/m]
+neg mem16               1111 0111       24+EA   16+EA         7          6            3         3
+                        [mod-011-r/m]
+neg mem32               0110 0110         -       -           -          6            3         3
+                        1111 0111
+                        [mod-011-r/m]
+nop                     1001 0000         3       3           3          3            1         1
+(same as xchg ax, ax)
+not reg8                1111 0110         3       3           2          2            1         1
+                        [11-010-r/m]
+not reg16               1111 0111         3       3           2          2            1         1
+                        [11-010-r/m]
+not reg32               0110 0110         3       3           2          2            1         1
+                        1111 0111
+                        [11-010-r/m]
+not mem8                1111 0110       16+EA   16+EA         7          6            3         3
+                        [mod-010-r/m]
+not mem16               1111 0111       24+EA   16+EA         7          6            3         3
+                        [mod-010-r/m]
+not mem32               0110 0110         -       -           -          6            3         3
+                        1111 0111
+                        [mod-010-r/m]
+or reg8, reg8           0000 10x0         3       ‘3          2          2            1         1
+                        [11-reg-r/m]
+or reg16, reg16         0000 10x1         3       3           2          2            1         1
+                        [11-reg-r/m]
+or reg32, reg32         0110 0110         3       3           2          2            1         1
+                        0000 10x1
+                        [11-reg-r/m]
+or reg8, mem8           0000 1010       9+EA     9+EA         7          6            2         2
+                        [mod-reg-r/m]
+or reg16, mem16         0000 1011       13+EA    9+EA         7          6            2         2
+                        [mod-reg-r/m]
+or reg32, mem32         0110 0110         -       -           -          6            2         2
+                        0000 1011
+                        [mod-reg-r/m]
+or mem8, reg8           0000 1000       16+EA   16+EA         7          7            3         3
+                        [mod-reg-r/m]
+or mem16, reg16         0000 1001       24+EA   16+EA         7          7            3         3
+                        [mod-reg-r/m]
+or mem32, reg32         0110 0110         -       -           -          7            3         3
+                        0000 1001
+                        [mod-reg-r/m]
+or reg8, imm8           1000 00x0         4       4           3          2            1         1
+                        [11-001-r/m]
+                        [imm]
+
+
+
+                                                                                             Page 1381
+Appendix D
+
+                            Table 97: 80x86 Instruction Set Referencea
+
+                         Encoding                      Execution Time in Cyclesc
+        Instruction
+                          (bin)b       8088     8086      80286       80386        80486     Pentium
+or reg16, imm16        1000 00s0         4       4           3          2            1          1
+                       [11-001-r/m]
+                       [imm]
+or reg32, imm32        0110 0110         4       4           3          2            1          1
+                       1000 00s0
+                       [11-001-r/m]
+                       [imm]
+or mem8, imm8          1000 00x0       17+EA   17+EA         7          7            3          3
+                       [mod-001-r/m]
+                       [imm]
+or mem16, imm16        1000 00s1       25+EA   17+EA         7          7            3          3
+                       [mod-001-r/m]
+                       [imm]
+or mem32, imm32        0110 0110         -       -           -          7             3         3
+                       1000 00s1
+                       [mod-001-r/m]
+                       [imm]
+or al, imm             0000 1100         4       4           3          2            1          1
+                       [imm]
+or ax, imm             0000 10101        4       4           3          2            1          1
+                       [imm]
+or eax, imm            0110 0110         -       -           -          2             1         1
+                       0000 1101
+                       [imm]
+out port, al           1110 0110        14       10          3          10           16         12
+                       [port8]
+out port, ax           1110 0111        14       10          3          10           16         12
+                       [port8]
+out port, eax          0110 0110         -       -           -          10           16         12
+                       1110 0111
+                       [port8]
+out dx, al             1110 1110         8       8           3          11           16         12
+out dx, ax             1110 1111        12       8           3          11           16         12
+out dx, eax            0110 0110         -       -           -          11           16         12
+                       1110 1111
+outsb                  1010 1010         -       -           5          14           17         13
+outsw                  1010 1011         -       -           5          14           17         13
+outsd                  0110 0110         -       -           -          14           17         13
+                       1010 1011
+rep outsb              1111 0010         -       -       5 + 4*cx    12 + 5*cx     17+5*cx   13 + 4*cx
+                       1010 1010
+rep outsw              1111 0010         -       -       5 + 4*cx    12 + 5*cx     17+5*cx   13 + 4*cx
+                       1010 1011
+rep outsd              0110 0110         -       -           -       12 + 5*cx     17+5*cx   13 + 4*cx
+                       1111 0010
+                       1010 1011
+pop reg16              0101 1rrr        12       8           5          4             1         1
+pop reg16              1000 1111        12       8           5          4            1          1
+(alternate encoding)   [11-000-r/m]
+
+
+
+Page 1382
+                                                                                                Appendices
+
+                              Table 97: 80x86 Instruction Set Referencea
+
+                          Encoding                          Execution Time in Cyclesc
+          Instruction
+                           (bin)b           8088    8086       80286       80386        80486    Pentium
+pop reg32               0110 0110             -       -           -          4            1         1
+                        0101 1rrr
+pop reg32               0110 0110             -       -           -          5            4         3
+(alternate encoding)    1000 1111
+                        [11-000-r/m]
+pop mem16               1000 1111           25+EA   17+EA         5          5            6         3
+                        [mod-000-r/m]
+pop mem32               1000 1111             -       -           -          5            6         3
+                        [mod-000-r/m]
+pop es                  0000 0111            12       8           5          7            3         3
+pop ss                  0001 0111            12       8           5          7            3         3
+pop ds                  0001 1111            12       8           5          7            3         3
+pop fs                  0000 1111             -       -           -          7            3         3
+                        1010 0001
+pop gs                  0000 1111             -       -           -          7            3         3
+                        1010 1001
+popa                    0110 0001             -       -          19          24           9         5
+popad                   0110 0110             -       -           -          24           9         5
+                        0110 0001
+popf                    1001 1101            12       8           5          5            9         6
+popfd                   0110 0110             -       -           -          5            9         6
+                        1001 1101
+push reg16              0101 0rrr            15      11           3          2            1         1
+push reg16              1111 1111            15      11           3          2            1         1
+(alternate encoding)    [11-110-r/m]
+push reg32              0110 0110             -       -           -          2            1         1
+                        0101 0rrr
+push reg32              0110 0110             -       -           -          2            1         1
+(alternate encoding)    1111 1111
+                        [11-110-r/m]
+push mem16              1111 1111           24+EA   16+EA         5          5            4         2
+                        [mod-110-r/m]
+push mem32              1111 1111             -       -           -          5            4         2
+                        [mod-110-r/m]
+push cs                 0000 1110            14      10           3          2            3         1
+push ds                 0001 1110            14      10           3          2            3         1
+push es                 0000 0110            14      10           3          2            3         1
+push ss                 0001 0110            14      10           3          2            3         1
+push fs                 0000 1111             -       -           -          2            3         1
+                        1010 0000
+push gs                 0000 1111             -       -           -          2            3         1
+                        1010 1000
+push imm8->16           0110 1000             -       -           3          2            1         1
+                        [imm8]
+                        (sign extends
+                        value to 16 bits)
+push imm16              0110 1010             -       -           3          2            1         1
+                        [imm16]
+
+
+                                                                                                 Page 1383
+Appendix D
+
+                            Table 97: 80x86 Instruction Set Referencea
+
+                         Encoding                            Execution Time in Cyclesc
+         Instruction
+                          (bin)b        8088       8086         80286       80386        80486   Pentium
+push imm32             0110 0110          -          -             -          2            1        1
+                       0110 1010
+                       [imm32]
+pusha                  0110 0000          -          -            17          18          11        5
+pushad                 0110 0110          -          -             -          18          11        5
+                       0110 0000
+pushf                  1001 1100         14         10             3          4            4        4
+pushfd                 0110 0110          -          -             -          4            4        4
+                       1001 1100
+rcl reg8, 1            1101 0000          2          2             2          9            3        1
+                       [11-010-r/m]
+rcl reg16, 1           1101 0001          2          2             2          9            3        1
+                       [11-010-r/m]
+rcl reg32, 1           0110 0110          -          -             -          9            3        1
+                       1101 0001
+                       [11-010-r/m]
+rcl mem8, 1            1101 0000       15+EA      15+EA            7          10           4        3
+                       [mod-010-r/m]
+rcl mem16, 1           1101 0001       23+EA      15+EA            7          10           4        3
+                       [mod-010-r/m]
+rcl mem32, 1           0110 0110          -          -             -          10           4        3
+                       1101 0001
+                       [mod-010-r/m]
+rcl reg8, cl           1101 0010       8 + 4*cl   8 + 4*cl       5 + cl       9          8-30     7-24
+                       [11-010-r/m]
+rcl reg16, cl          1101 0011       8 + 4*cl   8 + 4*cl       5 + cl       9          8-30     7-24
+                       [11-010-r/m]
+rcl reg32, cl          0110 0110          -          -             -          9          8-30     7-24
+                       1101 0011
+                       [11-010-r/m]
+rcl mem8, cl           1101 0010     20+EA+4*cl 20+EA+4*cl       8 + cl       10         9-31     9-26
+                       [mod-010-r/m]
+rcl mem16, cl          1101 0011     28+EA+4*cl 20+EA+4*cl       8 + cl       10         9-31     9-26
+                       [mod-010-r/m]
+rcl mem32, cl          0110 0110          -          -             -          10         9-31     9-26
+                       1101 0011
+                       [mod-010-r/m]
+rcl reg8, imm8         1100 0000          -          -         5+imm8         9          8-30     8-25
+                       [11-010-r/m]
+                       [imm8]
+rcl reg16, imm8        1100 0001          -          -         5+imm8         9          8-30     8-25
+                       [11-010-r/m]
+                       [imm8]
+rcl reg32, imm8        0110 0110          -          -             -          9          8-30     8-25
+                       1100 0001
+                       [11-010-r/m]
+                       [imm8]
+rcl mem8, imm8         1100 0000          -          -         8+imm8         10         9-31     10-27
+                       [mod-010-r/m]
+                       [imm8]
+
+
+
+Page 1384
+                                                                                                Appendices
+
+                           Table 97: 80x86 Instruction Set Referencea
+
+                        Encoding                            Execution Time in Cyclesc
+        Instruction
+                         (bin)b        8088       8086         80286       80386        80486    Pentium
+rcl mem16, imm8       1100 0001          -          -         8+imm8         10         9-31       10-27
+                      [mod-010-r/m]
+                      [imm8]
+rcl mem32, imm8       0110 0110          -          -             -          10         9-31       10-27
+                      1100 0001
+                      [mod-010-r/m]
+                      [imm8]
+rcr reg8, 1           1101 0000          2          2             2          9            3         1
+                      [11-011-r/m]
+rcr reg16, 1          1101 0001          2          2             2          9            3         1
+                      [11-011-r/m]
+rcr reg32, 1          0110 0110          -          -             -          9            3         1
+                      1101 0001
+                      [11-011-r/m]
+rcr mem8, 1           1101 0000       15+EA      15+EA            7          10           4         3
+                      [mod-011-r/m]
+rcr mem16, 1          1101 0001       23+EA      15+EA            7          10           4         3
+                      [mod-011-r/m]
+rcr mem32, 1          0110 0110          -          -             -          10           4         3
+                      1101 0001
+                      [mod-011-r/m]
+rcr reg8, cl          1101 0010       8 + 4*cl   8 + 4*cl       5 + cl       9          8-30       7-24
+                      [11-011-r/m]
+rcr reg16, cl         1101 0011       8 + 4*cl   8 + 4*cl       5 + cl       9          8-30       7-24
+                      [11-011-r/m]
+rcr reg32, cl         0110 0110          -          -             -          9          8-30       7-24
+                      1101 0011
+                      [11-011-r/m]
+rcr mem8, cl          1101 0010     20+EA+4*cl 20+EA+4*cl       8 + cl       10         9-31       9-26
+                      [mod-011-r/m]
+rcr mem16, cl         1101 0011     28+EA+4*cl 20+EA+4*cl       8 + cl       10         9-31       9-26
+                      [mod-011-r/m]
+rcr mem32, cl         0110 0110          -          -             -          10         9-31       9-26
+                      1101 0011
+                      [mod-011-r/m]
+rcr reg8, imm8        1100 0000          -          -         5+imm8         9          8-30       8-25
+                      [11-011-r/m]
+                      [imm8]
+rcr reg16, imm8       1100 0001          -          -         5+imm8         9          8-30       8-25
+                      [11-011-r/m]
+                      [imm8]
+rcr reg32, imm8       0110 0110          -          -             -          9          8-30       8-25
+                      1100 0001
+                      [11-011-r/m]
+                      [imm8]
+rcr mem8, imm8        1100 0000          -          -         8+imm8         10         9-31       10-27
+                      [mod-011-r/m]
+                      [imm8]
+rcr mem16, imm8       1100 0001          -          -         8+imm8         10         9-31       10-27
+                      [mod-011-r/m]
+                      [imm8]
+
+
+                                                                                                 Page 1385
+Appendix D
+
+                           Table 97: 80x86 Instruction Set Referencea
+
+                        Encoding                            Execution Time in Cyclesc
+        Instruction
+                         (bin)b        8088       8086         80286       80386        80486   Pentium
+rcr mem32, imm8       0110 0110          -          -             -          10         9-31     10-27
+                      1100 0001
+                      [mod-011-r/m]
+                      [imm8]
+ret                   1100 0011         20         16           11-14       10-13         5        2
+retn
+ret imm16             1100 0010         24         20           11-14       10-13         5        3
+retn imm16            [imm16]
+ret                   1100 1011         34         26           15-18       18-21        13        4
+retf
+ret imm16             1100 1010         33         25           15-18       18-21        14        4
+retf imm16            [imm16]
+rol reg8, 1           1101 0000          2          2             2          3            3        1
+                      [11-000-r/m]
+rol reg16, 1          1101 0001          2          2             2          3            3        1
+                      [11-000-r/m]
+rol reg32, 1          0110 0110          -          -             -          3            3        1
+                      1101 0001
+                      [11-000-r/m]
+rol mem8, 1           1101 0000       15+EA      15+EA            7          7            4        3
+                      [mod-000-r/m]
+rol mem16, 1          1101 0001       23+EA      15+EA            7          7            4        3
+                      [mod-000-r/m]
+rol mem32, 1          0110 0110          -          -             -          7            4        3
+                      1101 0001
+                      [mod-000-r/m]
+rol reg8, cl          1101 0010       8 + 4*cl   8 + 4*cl       5 + cl       3            3        4
+                      [11-000-r/m]
+rol reg16, cl         1101 0011       8 + 4*cl   8 + 4*cl       5 + cl       3            3        4
+                      [11-000-r/m]
+rol reg32, cl         0110 0110          -          -             -          3            3        4
+                      1101 0011
+                      [11-000-r/m]
+rol mem8, cl          1101 0010     20+EA+4*cl 20+EA+4*cl       8 + cl       7            4        4
+                      [mod-000-r/m]
+rol mem16, cl         1101 0011     28+EA+4*cl 20+EA+4*cl       8 + cl       7            4        4
+                      [mod-000-r/m]
+rol mem32, cl         0110 0110          -          -             -          7            4        4
+                      1101 0011
+                      [mod-000-r/m]
+rol reg8, imm8        1100 0000          -          -         5+imm8         3            2        1
+                      [11-000-r/m]
+                      [imm8]
+rol reg16, imm8       1100 0001          -          -         5+imm8         3            2        1
+                      [11-000-r/m]
+                      [imm8]
+rol reg32, imm8       0110 0110          -          -             -          3            2        1
+                      1100 0001
+                      [11-000-r/m]
+                      [imm8]
+
+
+
+Page 1386
+                                                                                                Appendices
+
+                           Table 97: 80x86 Instruction Set Referencea
+
+                        Encoding                            Execution Time in Cyclesc
+        Instruction
+                         (bin)b        8088       8086         80286       80386        80486    Pentium
+rol mem8, imm8        1100 0000          -          -         8+imm8         7            4         3
+                      [mod-000-r/m]
+                      [imm8]
+rol mem16, imm8       1100 0001          -          -         8+imm8         7            4         3
+                      [mod-000-r/m]
+                      [imm8]
+rol mem32, imm8       0110 0110          -          -             -          7            4         3
+                      1100 0001
+                      [mod-000-r/m]
+                      [imm8]
+ror reg8, 1           1101 0000          2          2             2          3            3         1
+                      [11-001-r/m]
+ror reg16, 1          1101 0001          2          2             2          3            3         1
+                      [11-001-r/m]
+ror reg32, 1          0110 0110          -          -             -          3            3         1
+                      1101 0001
+                      [11-001-r/m]
+ror mem8, 1           1101 0000       15+EA      15+EA            7          7            4         3
+                      [mod-001-r/m]
+ror mem16, 1          1101 0001       23+EA      15+EA            7          7            4         3
+                      [mod-001-r/m]
+ror mem32, 1          0110 0110          -          -             -          7            4         3
+                      1101 0001
+                      [mod-001-r/m]
+ror reg8, cl          1101 0010       8 + 4*cl   8 + 4*cl       5 + cl       3            3         4
+                      [11-001-r/m]
+ror reg16, cl         1101 0011       8 + 4*cl   8 + 4*cl       5 + cl       3            3         4
+                      [11-001-r/m]
+ror reg32, cl         0110 0110          -          -             -          3            3         4
+                      1101 0011
+                      [11-001-r/m]
+ror mem8, cl          1101 0010     20+EA+4*cl 20+EA+4*cl       8 + cl       7            4         4
+                      [mod-001-r/m]
+ror mem16, cl         1101 0011     28+EA+4*cl 20+EA+4*cl       8 + cl       7            4         4
+                      [mod-001-r/m]
+ror mem32, cl         0110 0110          -          -             -          7            4         4
+                      1101 0011
+                      [mod-001-r/m]
+ror reg8, imm8        1100 0000          -          -         5+imm8         3            2         1
+                      [11-001-r/m]
+                      [imm8]
+ror reg16, imm8       1100 0001          -          -         5+imm8         3            2         1
+                      [11-001-r/m]
+                      [imm8]
+ror reg32, imm8       0110 0110          -          -             -          3            2         1
+                      1100 0001
+                      [11-001-r/m]
+                      [imm8]
+ror mem8, imm8        1100 0000          -          -         8+imm8         7            4         3
+                      [mod-001-r/m]
+                      [imm8]
+
+
+                                                                                                 Page 1387
+Appendix D
+
+                                 Table 97: 80x86 Instruction Set Referencea
+
+                              Encoding                            Execution Time in Cyclesc
+        Instruction
+                               (bin)b        8088       8086         80286       80386        80486   Pentium
+ror mem16, imm8             1100 0001          -          -         8+imm8         7            4        3
+                            [mod-001-r/m]
+                            [imm8]
+ror mem32, imm8             0110 0110          -          -             -          7            4        3
+                            1100 0001
+                            [mod-001-r/m]
+                            [imm8]
+sahf                        1001 1110          4          4             2          3            2        2
+sal reg8, 1                 1101 0000          2          2             2          3            3        1
+(Same instruction as shl)   [11-100-r/m]
+sal reg16, 1                1101 0001          2          2             2          3            3        1
+                            [11-100-r/m]
+sal reg32, 1                0110 0110          -          -             -          3            3        1
+                            1101 0001
+                            [11-100-r/m]
+sal mem8, 1                 1101 0000       15+EA      15+EA            7          7            4        3
+                            [mod-100-r/m]
+sal mem16, 1                1101 0001       23+EA      15+EA            7          7            4        3
+                            [mod-100-r/m]
+sal mem32, 1                0110 0110          -          -             -          7            4        3
+                            1101 0001
+                            [mod-100-r/m]
+sal reg8, cl                1101 0010       8 + 4*cl   8 + 4*cl       5 + cl       3            3        4
+                            [11-100-r/m]
+sal reg16, cl               1101 0011       8 + 4*cl   8 + 4*cl       5 + cl       3            3        4
+                            [11-100-r/m]
+sal reg32, cl               0110 0110          -          -             -          3            3        4
+                            1101 0011
+                            [11-100-r/m]
+sal mem8, cl                1101 0010     20+EA+4*cl 20+EA+4*cl       8 + cl       7            4        4
+                            [mod-100-r/m]
+sal mem16, cl               1101 0011     28+EA+4*cl 20+EA+4*cl       8 + cl       7            4        4
+                            [mod-100-r/m]
+sal mem32, cl               0110 0110          -          -             -          7            4        4
+                            1101 0011
+                            [mod-100-r/m]
+sal reg8, imm8              1100 0000          -          -         5+imm8         3            2        1
+                            [11-100-r/m]
+                            [imm8]
+sal reg16, imm8             1100 0001          -          -         5+imm8         3            2        1
+                            [11-100-r/m]
+                            [imm8]
+sal reg32, imm8             0110 0110          -          -             -          3            2        1
+                            1100 0001
+                            [11-100-r/m]
+                            [imm8]
+sal mem8, imm8              1100 0000          -          -         8+imm8         7            4        3
+                            [mod-100-r/m]
+                            [imm8]
+
+
+
+
+Page 1388
+                                                                                                 Appendices
+
+                           Table 97: 80x86 Instruction Set Referencea
+
+                        Encoding                             Execution Time in Cyclesc
+        Instruction
+                         (bin)b         8088       8086         80286       80386        80486    Pentium
+sal mem16, imm8       1100 0001           -          -         8+imm8         7            4         3
+                      [mod-100-r/m]
+                      [imm8]
+sal mem32, imm8       0110 0110           -          -             -          7            4         3
+                      1100 0001
+                      [mod-100-r/m]
+                      [imm8]
+sar reg8, 1           1101 0000           2          2             2          3            3         1
+                      [11-111-r/m]
+sar reg16, 1          1101 0001           2          2             2          3            3         1
+                      [11-111-r/m]
+sar reg32, 1          0110 0110           -          -             -          3            3         1
+                      1101 0001
+                      [11-111-r/m]
+sar mem8, 1           1101 0000         15+EA      15+EA           7          7            4         3
+                      [mod-111-r/m]
+sar mem16, 1          1101 0001         23+EA      15+EA           7          7            4         3
+                      [mod-111-r/m]
+sar mem32, 1          0110 0110           -          -             -          7            4         3
+                      1101 0001
+                      [mod-111-r/m]
+sar reg8, cl          1101 0010        8 + 4*cl   8 + 4*cl       5 + cl       3            3         4
+                      [11-111-r/m]
+sar reg16, cl         1101 0011        8 + 4*cl   8 + 4*cl       5 + cl       3            3         4
+                      [11-111-r/m]
+sar reg32, cl         0110 0110           -          -             -          3            3         4
+                      1101 0011
+                      [11-111-r/m]
+sar mem8, cl          1101 0010       20+EA+4*cl 20+EA+4*cl      8 + cl       7            4         4
+                      [mod-111-r/m]
+sar mem16, cl                         28+EA+4*cl 20+EA+4*cl      8 + cl       7            4         4
+                      1101 0011
+                      [mod-111-r/m]
+sar mem32, cl         0110 0110           -          -             -          7            4         4
+                      1101 0011
+                      [mod-111-r/m]
+sar reg8, imm8        1100 0000           -          -         5+imm8         3            2         1
+                      [11-111-r/m]
+                      [imm8]
+sar reg16, imm8       1100 0001           -          -         5+imm8         3            2         1
+                      [11-111-r/m]
+                      [imm8]
+sar reg32, imm8       0110 0110           -          -             -          3            2         1
+                      1100 0001
+                      [11-111-r/m]
+                      [imm8]
+sar mem8, imm8        1100 0000           -          -         8+imm8         7            4         3
+                      [mod-111-r/m]
+                      [imm8]
+
+
+
+
+                                                                                                  Page 1389
+Appendix D
+
+                          Table 97: 80x86 Instruction Set Referencea
+
+                       Encoding                      Execution Time in Cyclesc
+       Instruction
+                        (bin)b       8088     8086      80286       80386        80486   Pentium
+sar mem16, imm8      1100 0001         -       -       8+imm8         7            4        3
+                     [mod-111-r/m]
+                     [imm8]
+sar mem32, imm8      0110 0110         -       -           -          7            4        3
+                     1100 0001
+                     [mod-111-r/m]
+                     [imm8]
+sbb reg8, reg8       0001 10x0         3       ‘3          2          2            1        1
+                     [11-reg-r/m]
+sbb reg16, reg16     0001 10x1         3       3           2          2            1        1
+                     [11-reg-r/m]
+sbb reg32, reg32     0110 0110         3       3           2          2            1        1
+                     0001 10x1
+                     [11-reg-r/m]
+sbb reg8, mem8       0001 1010       9+EA     9+EA         7          7            2        2
+                     [mod-reg-r/m]
+sbb reg16, mem16     0001 1011       13+EA    9+EA         7          7            2        2
+                     [mod-reg-r/m]
+sbb reg32, mem32     0110 0110         -       -           -          7            2        2
+                     0001 1011
+                     [mod-reg-r/m]
+sbb mem8, reg8       0001 1000       16+EA   16+EA         7          6            3        3
+                     [mod-reg-r/m]
+sbb mem16, reg16     0001 1001       24+EA   16+EA         7          6            3        3
+                     [mod-reg-r/m]
+sbb mem32, reg32     0110 0110         -       -           -          6            3        3
+                     0001 1001
+                     [mod-reg-r/m]
+sbb reg8, imm8       1000 00x0         4       4           3          2            1        1
+                     [11-011-r/m]
+                     [imm]
+sbb reg16, imm16     1000 00s1         4       4           3          2            1        1
+                     [11-011-r/m]
+                     [imm]
+sbb reg32, imm32     0110 0110         4       4           3          2            1        1
+                     1000 00s1
+                     [11-011-r/m]
+                     [imm]
+sbb mem8, imm8       1000 00x0       17+EA   17+EA         7          7            3        3
+                     [mod-011-r/m]
+                     [imm]
+sbb mem16, imm16     1000 00s1       25+EA   17+EA         7          7            3        3
+                     [mod-011-r/m]
+                     [imm]
+sbb mem32, imm32     0110 0110         -       -           -          7            3        3
+                     1000 00s1
+                     [mod-011-r/m]
+                     [imm]
+sbb al, imm          0001 1100         4       4           3          2            1        1
+                     [imm]
+
+
+
+
+Page 1390
+                                                                                                         Appendices
+
+                           Table 97: 80x86 Instruction Set Referencea
+
+                        Encoding                                Execution Time in Cyclesc
+        Instruction
+                         (bin)b         8088          8086         80286       80386         80486        Pentium
+sbb ax, imm           0001 1101           4            4              3          2              1            1
+                      [imm]
+sbb eax, imm          0110 0110            -            -             -          2              1            1
+                      0001 1101
+                      [imm]
+scasb                 1010 0100           15           15             7          8              6            4
+scasw                 1010 0101           19           15             7          8              6            4
+scasd                 0110 0110            -            -             -          8              6            4
+                      1010 0101
+rep scasb             1111 0010       9 + 15 * cx   9 + 15*cx     5 + 8*cx    5 + 8*cx      7 + 5*cx      9 + 4*cx
+                      1010 0100                                                             5 if cx=0     7 if cx=0
+rep scasw             1111 0010       9 + 19 * cx   9 + 15*cx     5 + 8*cx    5 + 8*cx      7 + 5*cx      9 + 4*cx
+                      1010 0101                                                             5 if cx=0     7 if cx=0
+rep scasd             0110 0110            -            -             -       5 + 8*cx      7 + 5*cx      9 + 4*cx
+                      1111 0010                                                             5 if cx=0     7 if cx=0
+                      1010 0101
+seta reg8             0000 1111            -            -             -          4           4 if set        1
+                      1001 0111                                                             3 if clear
+                      [11-000-r/m]e
+seta mem8             0000 1111            -            -             -          5           3 if set        2
+                      1001 0011                                                             4 if clear
+                      [mod-000-r/m]
+setae reg8            0000 1111            -            -             -          4           4 if set        1
+                      1001 0011                                                             3 if clear
+                      [11-000-r/m]
+setae mem8            0000 1111            -            -             -          5           3 if set        2
+                      1001 0011                                                             4 if clear
+                      [mod-000-r/m]
+setb reg8             0000 1111            -            -             -          4           4 if set        1
+                      1001 0010                                                             3 if clear
+                      [11-000-r/m]
+setb mem8             0000 1111            -            -             -          5           3 if set        2
+                      1001 0010                                                             4 if clear
+                      [mod-000-r/m]
+setbe reg8            0000 1111            -            -             -          4           4 if set        1
+                      1001 0110                                                             3 if clear
+                      [11-000-r/m]
+setbe mem8            0000 1111            -            -             -          5           3 if set        2
+                      1001 0110                                                             4 if clear
+                      [mod-000-r/m]
+setc reg8             0000 1111            -            -             -          4           4 if set        1
+                      1001 0010                                                             3 if clear
+                      [11-000-r/m]
+setc mem8             0000 1111            -            -             -          5           3 if set        2
+                      1001 0010                                                             4 if clear
+                      [mod-000-r/m]
+sete reg8             0000 1111            -            -             -          4           4 if set        1
+                      1001 0100                                                             3 if clear
+                      [11-000-r/m]
+
+
+
+
+                                                                                                          Page 1391
+Appendix D
+
+                          Table 97: 80x86 Instruction Set Referencea
+
+                       Encoding                      Execution Time in Cyclesc
+       Instruction
+                        (bin)b       8088     8086      80286       80386         80486       Pentium
+sete mem8            0000 1111        -        -           -          5           3 if set       2
+                     1001 0100                                                   4 if clear
+                     [mod-000-r/m]
+setg reg8            0000 1111        -        -           -          4           4 if set       1
+                     1001 1111                                                   3 if clear
+                     [11-000-r/m]
+setg mem8            0000 1111        -        -           -          5           3 if set       2
+                     1001 1111                                                   4 if clear
+                     [mod-000-r/m]
+setge reg8           0000 1111        -        -           -          4           4 if set       1
+                     1001 1101                                                   3 if clear
+                     [11-000-r/m]
+setge mem8           0000 1111        -        -           -          5           3 if set       2
+                     1001 1101                                                   4 if clear
+                     [mod-000-r/m]
+setl reg8            0000 1111        -        -           -          4           4 if set       1
+                     1001 1100                                                   3 if clear
+                     [11-000-r/m]
+setl mem8            0000 1111        -        -           -          5           3 if set       2
+                     1001 1100                                                   4 if clear
+                     [mod-000-r/m]
+setle reg8           0000 1111        -        -           -          4           4 if set       1
+                     1001 1110                                                   3 if clear
+                     [11-000-r/m]
+setle mem8           0000 1111        -        -           -          5           3 if set       2
+                     1001 1110                                                   4 if clear
+                     [mod-000-r/m]
+setna reg8           0000 1111        -        -           -          4           4 if set       1
+                     1001 0110                                                   3 if clear
+                     [11-000-r/m]
+setna mem8           0000 1111        -        -           -          5           3 if set       2
+                     1001 0110                                                   4 if clear
+                     [mod-000-r/m]
+setnae reg8          0000 1111        -        -           -          4           4 if set       1
+                     1001 0010                                                   3 if clear
+                     [11-000-r/m]
+setnae mem8          0000 1111        -        -           -          5           3 if set       2
+                     1001 0010                                                   4 if clear
+                     [mod-000-r/m]
+setnb reg8           0000 1111        -        -           -          4           4 if set       1
+                     1001 0011                                                   3 if clear
+                     [11-000-r/m]
+setnb mem8           0000 1111        -        -           -          5           3 if set       2
+                     1001 0011                                                   4 if clear
+                     [mod-000-r/m]
+setnbe reg8          0000 1111        -        -           -          4           4 if set       1
+                     1001 0111                                                   3 if clear
+                     [11-000-r/m]
+setnbe mem8          0000 1111        -        -           -          5           3 if set       2
+                     1001 0111                                                   4 if clear
+                     [mod-000-r/m]
+
+
+
+Page 1392
+                                                                                              Appendices
+
+                          Table 97: 80x86 Instruction Set Referencea
+
+                       Encoding                      Execution Time in Cyclesc
+       Instruction
+                        (bin)b       8088     8086      80286       80386         80486        Pentium
+setnc reg8           0000 1111        -        -           -          4           4 if set        1
+                     1001 0011                                                   3 if clear
+                     [11-000-r/m]
+setnc mem8           0000 1111        -        -           -          5           3 if set        2
+                     1001 0011                                                   4 if clear
+                     [mod-000-r/m]
+setne reg8           0000 1111        -        -           -          4           4 if set        1
+                     1001 0101                                                   3 if clear
+                     [11-000-r/m]
+setne mem8           0000 1111        -        -           -          5           3 if set        2
+                     1001 0101                                                   4 if clear
+                     [mod-000-r/m]
+setng reg8           0000 1111        -        -           -          4           4 if set        1
+                     1001 1110                                                   3 if clear
+                     [11-000-r/m]
+setng mem8           0000 1111        -        -           -          5           3 if set        2
+                     1001 1110                                                   4 if clear
+                     [mod-000-r/m]
+setnge reg8          0000 1111        -        -           -          4           4 if set        1
+                     1001 1100                                                   3 if clear
+                     [11-000-r/m]
+setnge mem8          0000 1111        -        -           -          5           3 if set        2
+                     1001 1100                                                   4 if clear
+                     [mod-000-r/m]
+setnl reg8           0000 1111        -        -           -          4           4 if set        1
+                     1001 1101                                                   3 if clear
+                     [11-000-r/m]
+setnl mem8           0000 1111        -        -           -          5           3 if set        2
+                     1001 1101                                                   4 if clear
+                     [mod-000-r/m]
+setnle reg8          0000 1111        -        -           -          4           4 if set        1
+                     1001 1111                                                   3 if clear
+                     [11-000-r/m]
+setnle mem8          0000 1111        -        -           -          5           3 if set        2
+                     1001 1111                                                   4 if clear
+                     [mod-000-r/m]
+setno reg8           0000 1111        -        -           -          4           4 if set        1
+                     1001 0001                                                   3 if clear
+                     [11-000-r/m]
+setno mem8           0000 1111        -        -           -          5           3 if set        2
+                     1001 0001                                                   4 if clear
+                     [mod-000-r/m]
+setnp reg8           0000 1111        -        -           -          4           4 if set        1
+                     1001 1011                                                   3 if clear
+                     [11-000-r/m]
+setnp mem8           0000 1111        -        -           -          5           3 if set        2
+                     1001 1011                                                   4 if clear
+                     [mod-000-r/m]
+setns reg8           0000 1111        -        -           -          4           4 if set        1
+                     1001 1001                                                   3 if clear
+                     [11-000-r/m]
+
+
+
+                                                                                               Page 1393
+Appendix D
+
+                           Table 97: 80x86 Instruction Set Referencea
+
+                        Encoding                      Execution Time in Cyclesc
+        Instruction
+                         (bin)b       8088     8086      80286       80386         80486       Pentium
+setns mem8            0000 1111        -        -           -          5           3 if set       2
+                      1001 1001                                                   4 if clear
+                      [mod-000-r/m]
+setnz reg8            0000 1111        -        -           -          4           4 if set       1
+                      1001 0101                                                   3 if clear
+                      [11-000-r/m]
+setnz mem8            0000 1111        -        -           -          5           3 if set       2
+                      1001 0101                                                   4 if clear
+                      [mod-000-r/m]
+seto reg8             0000 1111        -        -           -          4           4 if set       1
+                      1001 0000                                                   3 if clear
+                      [11-000-r/m]
+seto mem8             0000 1111        -        -           -          5           3 if set       2
+                      1001 0000                                                   4 if clear
+                      [mod-000-r/m]
+setp reg8             0000 1111        -        -           -          4           4 if set       1
+                      1001 1010                                                   3 if clear
+                      [11-000-r/m]
+setp mem8             0000 1111        -        -           -          5           3 if set       2
+                      1001 1010                                                   4 if clear
+                      [mod-000-r/m]
+setpe reg8            0000 1111        -        -           -          4           4 if set       1
+                      1001 1010                                                   3 if clear
+                      [11-000-r/m]
+setpe mem8            0000 1111        -        -           -          5           3 if set       2
+                      1001 1010                                                   4 if clear
+                      [mod-000-r/m]
+setpo reg8            0000 1111        -        -           -          4           4 if set       1
+                      1001 1011                                                   3 if clear
+                      [11-000-r/m]
+setpo mem8            0000 1111        -        -           -          5           3 if set       2
+                      1001 1011                                                   4 if clear
+                      [mod-000-r/m]
+sets reg8             0000 1111        -        -           -          4           4 if set       1
+                      1001 1000                                                   3 if clear
+                      [11-000-r/m]
+sets mem8             0000 1111        -        -           -          5           3 if set       2
+                      1001 1000                                                   4 if clear
+                      [mod-000-r/m]
+setz reg8             0000 1111        -        -           -          4           4 if set       1
+                      1001 0100                                                   3 if clear
+                      [11-000-r/m]
+setz mem8             0000 1111        -        -           -          5           3 if set       2
+                      1001 0100                                                   4 if clear
+                      [mod-000-r/m]
+shl reg8, 1           1101 0000        2        2           2          3              3           1
+                      [11-100-r/m]
+shl reg16, 1          1101 0001        2        2           2          3              3           1
+                      [11-100-r/m]
+shl reg32, 1          0110 0110        -        -           -          3              3           1
+                      1101 0001
+                      [11-100-r/m]
+
+
+Page 1394
+                                                                                                    Appendices
+
+                               Table 97: 80x86 Instruction Set Referencea
+
+                            Encoding                            Execution Time in Cyclesc
+        Instruction
+                             (bin)b        8088       8086         80286       80386        80486    Pentium
+shl mem8, 1               1101 0000       15+EA      15+EA            7          7            4         3
+                          [mod-100-r/m]
+shl mem16, 1              1101 0001       23+EA      15+EA            7          7            4         3
+                          [mod-100-r/m]
+shl mem32, 1              0110 0110          -          -             -          7            4         3
+                          1101 0001
+                          [mod-100-r/m]
+shl reg8, cl              1101 0010       8 + 4*cl   8 + 4*cl       5 + cl       3            3         4
+                          [11-100-r/m]
+shl reg16, cl             1101 0011       8 + 4*cl   8 + 4*cl       5 + cl       3            3         4
+                          [11-100-r/m]
+shl reg32, cl             0110 0110          -          -             -          3            3         4
+                          1101 0011
+                          [11-100-r/m]
+shl mem8, cl              1101 0010     20+EA+4*cl 20+EA+4*cl       8 + cl       7            4         4
+                          [mod-100-r/m]
+shl mem16, cl             1101 0011     28+EA+4*cl 20+EA+4*cl       8 + cl       7            4         4
+                          [mod-100-r/m]
+shl mem32, cl             0110 0110          -          -             -          7            4         4
+                          1101 0011
+                          [mod-100-r/m]
+shl reg8, imm8            1100 0000          -          -         5+imm8         3            2         1
+                          [11-100-r/m]
+                          [imm8]
+shl reg16, imm8           1100 0001          -          -         5+imm8         3            2         1
+                          [11-100-r/m]
+                          [imm8]
+shl reg32, imm8           0110 0110          -          -             -          3            2         1
+                          1100 0001
+                          [11-100-r/m]
+                          [imm8]
+shl mem8, imm8            1100 0000          -          -         8+imm8         7            4         3
+                          [mod-100-r/m]
+                          [imm8]
+shl mem16, imm8           1100 0001          -          -         8+imm8         7            4         3
+                          [mod-100-r/m]
+                          [imm8]
+shl mem32, imm8           0110 0110          -          -             -          7            4         3
+                          1100 0001
+                          [mod-100-r/m]
+                          [imm8]
+shld reg16, reg16, imm8   0000 1111          -          -             -          3            2         4
+                          1010 0100
+r/m is 1st operand,       [11-reg-r/m]
+reg is second operand.    [imm8]
+shld reg32, reg32, imm8   0110 0110          -          -             -          3            2         4
+                          0000 1111
+r/m is 1st operand,       1010 0100
+reg is second operand.    [11-reg-r/m]
+                          [imm8]
+
+
+
+
+                                                                                                     Page 1395
+Appendix D
+
+                              Table 97: 80x86 Instruction Set Referencea
+
+                           Encoding                            Execution Time in Cyclesc
+        Instruction
+                            (bin)b        8088       8086         80286       80386        80486   Pentium
+shld mem16, reg16, imm8 0000 1111           -          -             -          7            3        4
+                        1010 0100
+                        [mod-reg-r/m]
+                        [imm8]
+shld mem32, reg32, imm8 0110 0110           -          -             -          7            3        4
+                        0000 1111
+                        1010 0100
+                        [mod-reg-r/m]
+                        [imm8]
+shld reg16, reg16, cl    0000 1111          -          -             -          3            3        4
+                         1010 0101
+r/m is 1st operand,      [11-reg-r/m]
+reg is second operand.
+shld reg32, reg32, cl    0110 0110          -          -             -          3            3        4
+                         0000 1111
+r/m is 1st operand,      1010 0101
+reg is second operand.   [11-reg-r/m]
+shld mem16, reg16, cl    0000 1111          -          -             -          7            4        5
+                         1010 0101
+                         [mod-reg-r/m]
+shld mem32, reg32, cl    0110 0110          -          -             -          7            4        5
+                         0000 1111
+                         1010 0101
+                         [mod-reg-r/m]
+shr reg8, 1              1101 0000          2          2             2          3            3        1
+                         [11-101-r/m]
+shr reg16, 1             1101 0001          2          2             2          3            3        1
+                         [11-101-r/m]
+shr reg32, 1             0110 0110          -          -             -          3            3        1
+                         1101 0001
+                         [11-101-r/m]
+shr mem8, 1              1101 0000       15+EA      15+EA            7          7            4        3
+                         [mod-101-r/m]
+shr mem16, 1             1101 0001       23+EA      15+EA            7          7            4        3
+                         [mod-101-r/m]
+shr mem32, 1             0110 0110          -          -             -          7            4        3
+                         1101 0001
+                         [mod-101-r/m]
+shr reg8, cl             1101 0010       8 + 4*cl   8 + 4*cl       5 + cl       3            3        4
+                         [11-101-r/m]
+shr reg16, cl            1101 0011       8 + 4*cl   8 + 4*cl       5 + cl       3            3        4
+                         [11-101-r/m]
+shr reg32, cl            0110 0110          -          -             -          3            3        4
+                         1101 0011
+                         [11-101-r/m]
+shr mem8, cl             1101 0010     20+EA+4*cl 20+EA+4*cl       8 + cl       7            4        4
+                         [mod-101-r/m]
+shr mem16, cl            1101 0011     28+EA+4*cl 20+EA+4*cl       8 + cl       7            4        4
+                         [mod-101-r/m]
+shr mem32, cl            0110 0110          -          -             -          7            4        4
+                         1101 0011
+                         [mod-101-r/m]
+
+
+Page 1396
+                                                                                              Appendices
+
+                               Table 97: 80x86 Instruction Set Referencea
+
+                            Encoding                      Execution Time in Cyclesc
+       Instruction
+                             (bin)b       8088     8086      80286       80386        80486    Pentium
+shr reg8, imm8            1100 0000        -        -       5+imm8         3            2         1
+                          [11-101-r/m]
+                          [imm8]
+shr reg16, imm8           1100 0001        -        -       5+imm8         3            2         1
+                          [11-101-r/m]
+                          [imm8]
+shr reg32, imm8           0110 0110        -        -           -          3            2         1
+                          1100 0001
+                          [11-101-r/m]
+                          [imm8]
+shr mem8, imm8            1100 0000        -        -       8+imm8         7            4         3
+                          [mod-101-r/m]
+                          [imm8]
+shr mem16, imm8           1100 0001        -        -       8+imm8         7            4         3
+                          [mod-101-r/m]
+                          [imm8]
+shr mem32, imm8           0110 0110        -        -           -          7            4         3
+                          1100 0001
+                          [mod-101-r/m]
+                          [imm8]
+shrd reg16, reg16, imm8   0000 1111        -        -           -          3            2         4
+                          1010 1100
+r/m is 1st operand,       [11-reg-r/m]
+reg is second operand.    [imm8]
+shrd reg32, reg32, imm8   0110 0110        -        -           -          3            2         4
+                          0000 1111
+r/m is 1st operand,       1010 1100
+reg is second operand.    [11-reg-r/m]
+                          [imm8]
+shrd mem16, reg16, imm8 0000 1111          -        -           -          7            3         4
+                        1010 1100
+                        [mod-reg-r/m]
+                        [imm8]
+shrd mem32, reg32, imm8 0110 0110          -        -           -          7            3         4
+                        0000 1111
+                        1010 1100
+                        [mod-reg-r/m]
+                        [imm8]
+shrd reg16, reg16, cl     0000 1111        -        -           -          3            3         4
+                          1010 1101
+r/m is 1st operand,       [11-reg-r/m]
+reg is second operand.
+shrd reg32, reg32, cl     0110 0110        -        -           -          3            3         4
+                          0000 1111
+r/m is 1st operand,       1010 1101
+reg is second operand.    [11-reg-r/m]
+shrd mem16, reg16, cl     0000 1111        -        -           -          7            4         5
+                          1010 1101
+                          [disp]
+shld mem32, reg32, cl     0110 0110        -        -           -          7            4         5
+                          0000 1111
+                          1010 1101
+                          [mod-reg-r/m]
+
+
+                                                                                               Page 1397
+Appendix D
+
+                           Table 97: 80x86 Instruction Set Referencea
+
+                        Encoding                                Execution Time in Cyclesc
+        Instruction
+                         (bin)b         8088          8086         80286       80386         80486      Pentium
+stc                   1111 1001           2            2              2          2             2           2
+std                   1111 1101           2            2              2          2             2           2
+sti                   1111 1011           2            2              2          3             5           7
+stosb                 1010 1010           11           11             3          4             5           3
+stosw                 1010 1011           15           11             3          4             5           3
+stosd                 0110 0110            -            -             -          4             5           3
+                      1010 1011
+rep stosb             1111 0010       9 + 10 * cx   9 + 10*cx     4 + 3*cx    5 + 5*cx      7 + 5*cx    9 + 3*cx
+                      1010 1010                                                             5 if cx=0   6 if cx=0
+rep stosw             1111 0010       9 + 14 * cx   9 + 10*cx     4 + 3*cx    5 + 5*cx      7 + 5*cx    9 + 3*cx
+                      1010 1011                                                             5 if cx=0   6 if cx=0
+rep stosd             0110 0110            -            -             -       5 + 5*cx      7 + 5*cx    9 + 3*cx
+                      1111 0010                                                             5 if cx=0   6 if cx=0
+                      1010 1011
+sub reg8, reg8        0010 10x0           3            ‘3             2          2             1           1
+                      [11-reg-r/m]
+sub reg16, reg16      0010 10x1           3            3              2          2             1           1
+                      [11-reg-r/m]
+sub reg32, reg32      0110 0110           3            3              2          2             1           1
+                      0010 10x1
+                      [11-reg-r/m]
+sub reg8, mem8        0010 1010         9+EA         9+EA             7          7             2           2
+                      [mod-reg-r/m]
+sub reg16, mem16      0010 1011        13+EA         9+EA             7          7             2           2
+                      [mod-reg-r/m]
+sub reg32, mem32      0110 0110            -            -             -          7             2           2
+                      0010 1011
+                      [mod-reg-r/m]
+sub mem8, reg8        0010 1000        16+EA         16+EA            7          6             3           3
+                      [mod-reg-r/m]
+sub mem16, reg16      0010 1001        24+EA         16+EA            7          6             3           3
+                      [mod-reg-r/m]
+sub mem32, reg32      0110 0110            -            -             -          6             3           3
+                      0010 1001
+                      [mod-reg-r/m]
+sub reg8, imm8        1000 00x0           4            4              3          2             1           1
+                      [11-101-r/m]
+                      [imm]
+sub reg16, imm16      1000 00s1           4            4              3          2             1           1
+                      [11-101-r/m]
+                      [imm]
+sub reg32, imm32      0110 0110           4            4              3          2             1           1
+                      1000 00s1
+                      [11-101-r/m]
+                      [imm]
+sub mem8, imm8        1000 00x0        17+EA         17+EA            7          7             3           3
+                      [mod-101-r/m]
+                      [imm]
+
+
+
+
+Page 1398
+                                                                                         Appendices
+
+                          Table 97: 80x86 Instruction Set Referencea
+
+                       Encoding                      Execution Time in Cyclesc
+       Instruction
+                        (bin)b       8088     8086      80286       80386        80486    Pentium
+sub mem16, imm16     1000 00s1       25+EA   17+EA         7          7            3         3
+                     [mod-101-r/m]
+                     [imm]
+sub mem32, imm32     0110 0110         -       -           -          7            3         3
+                     1000 00s1
+                     [mod-101-r/m]
+                     [imm]
+sub al, imm          0010 1100         4       4           3          2            1         1
+                     [imm]
+sub ax, imm          0010 1101         4       4           3          2            1         1
+                     [imm]
+sub eax, imm         0110 0110         -       -           -          2            1         1
+                     0010 1101
+                     [imm]
+test reg8, reg8      1000 0100         3       ‘3          2          2            1         1
+                     [11-reg-r/m]
+test reg16, reg16    1000 0101         3       3           2          2            1         1
+                     [11-reg-r/m]
+test reg32, reg32    0110 0110         3       3           2          2            1         1
+                     1000 0101
+                     [11-reg-r/m]
+test reg8, mem8      1000 0110       9+EA     9+EA         6          5            2         2
+                     [mod-reg-r/m]
+test reg16, mem16    1000 0111       13+EA    9+EA         6          5            2         2
+                     [mod-reg-r/m]
+test reg32, mem32    0110 0110         -       -           -          5            2         2
+                     1000 0111
+                     [mod-reg-r/m]
+test reg8, imm8      1111 0110         4       4           3          2            1         1
+                     [11-000-r/m]
+                     [imm]
+test reg16, imm16    1111 0111         4       4           3          2            1         1
+                     [11-000-r/m]
+                     [imm]
+test reg32, imm32    0110 0110         4       4           3          2            1         1
+                     1111 0111
+                     [11-000-r/m]
+                     [imm]
+test mem8, imm8      1111 0110       9+EA     9+EA         6          5            2         2
+                     [mod-000-r/m]
+                     [imm]
+test mem16, imm16    1111 0111       13+EA    9+EA         6          5            2         2
+                     [mod-000-r/m]
+                     [imm]
+test mem32, imm32    0110 0110         -       -           -          5            2         2
+                     1111 0111
+                     [mod-000-r/m]
+                     [imm]
+test al, imm         1010 1000         4       4           3          2            1         1
+                     [imm]
+
+
+
+
+                                                                                          Page 1399
+Appendix D
+
+                              Table 97: 80x86 Instruction Set Referencea
+
+                           Encoding                          Execution Time in Cyclesc
+       Instruction
+                            (bin)b        8088      8086        80286       80386          80486      Pentium
+test ax, imm             1010 1001         4         4             3          2              1            1
+                         [imm]
+test eax, imm            0110 0110          -         -            -          2              1            1
+                         1010 1001
+                         [imm]
+xadd reg8, reg8          0000 1111          -         -            -           -             3            3
+                         1100 0000
+r/m is first operand,    [11-reg-r/m]
+reg is second operand.
+xadd reg16, reg16        0000 1111          -         -            -           -             3            3
+                         1100 0001
+                         [11-reg-r/m]
+xadd reg32, reg32        0110 0110          -         -            -           -             3            3
+                         0000 1111
+                         1100 0001
+                         [11-reg-r/m]
+xadd mem8, reg8          0000 1111          -         -            -           -             4            4
+                         1100 0000
+                         [mod-reg-r/m]
+xadd mem16, reg16        0000 1111          -         -            -           -             4            4
+                         1100 0001
+                         [mod-reg-r/m]
+xadd mem32, reg32        0110 0110          -         -            -           -             4            4
+                         0000 1111
+                         1100 0001
+                         [mod-reg-r/m]
+xchg reg8, reg8          1000 0110         4         4             3          3              3            3
+                         [11-reg-r/m]
+xchg reg16, reg16        1000 0111         4         4             3          3              3            3
+                         [11-reg-r/m]
+xchg reg32, reg32        0110 0110          -         -            -          3              3            3
+                         1000 0111
+                         [11-reg-r/m]
+xchg mem8, reg8f         1000 0110       17 + EA   17 + EA         5          5              5            3
+                         [11-reg-r/m]
+xchg mem16, reg16        1000 0111       25 + EA   17 + EA         5          5              5            3
+                         [11-reg-r/m]
+xchg mem32, reg32        0110 0110          -         -            -          5              5            3
+                         1000 0111
+                         [11-reg-r/m]
+xchg ax, reg16           1001 0rrr         3         3             3          3               3           2
+                                                                                         1 if reg=ax 1 if reg=ax
+xchg ax, reg32           0110 0110         3         3             3          3              3            2
+                         1001 0rrr
+xlat                     1101 0111         11        11            5          5              4            4
+xor reg8, reg8           0011 00x0         3         ‘3            2          2              1            1
+                         [11-reg-r/m]
+xor reg16, reg16         0011 00x1         3         3             2          2              1            1
+                         [11-reg-r/m]
+
+
+
+
+Page 1400
+                                                                                                         Appendices
+
+                               Table 97: 80x86 Instruction Set Referencea
+
+                            Encoding                              Execution Time in Cyclesc
+       Instruction
+                             (bin)b          8088        8086         80286        80386       80486       Pentium
+xor reg32, reg32         0110 0110            3            3            2            2            1            1
+                         0011 00x1
+                         [11-reg-r/m]
+xor reg8, mem8           0011 0010          9+EA         9+EA           7            7            2            2
+                         [mod-reg-r/m]
+xor reg16, mem16         0011 0011          13+EA        9+EA           7            7            2            2
+                         [mod-reg-r/m]
+xor reg32, mem32         0110 0110             -            -           -            7            2            2
+                         0011 0011
+                         [mod-reg-r/m]
+xor mem8, reg8           0011 0000          16+EA        16+EA          7            6            3            3
+                         [mod-reg-r/m]
+xor mem16, reg16         0011 0001          24+EA        16+EA          7            6            3            3
+                         [mod-reg-r/m]
+xor mem32, reg32         0110 0110             -            -           -            6            3            3
+                         0011 0001
+                         [mod-reg-r/m]
+xor reg8, imm8           1000 00x0            4            4            3            2            1            1
+                         [11-110-r/m]
+                         [imm]
+xor reg16, imm16         1000 00s1            4            4            3            2            1            1
+                         [11-110-r/m]
+                         [imm]
+xor reg32, imm32         0110 0110            4            4            3            2            1            1
+                         1000 00s1
+                         [11-110-r/m]
+                         [imm]
+xor mem8, imm8           1000 00x0          17+EA        17+EA          7            7            3            3
+                         [mod-110-r/m]
+                         [imm]
+xor mem16, imm16         1000 00s1          25+EA        17+EA          7            7            3            3
+                         [mod-110-r/m]
+                         [imm]
+xor mem32, imm32         0110 0110             -            -           -            7            3            3
+                         1000 00s1
+                         [mod-110-r/m]
+                         [imm]
+xor al, imm              0011 0100            4            4            3            2            1            1
+                         [imm]
+xor ax, imm              0011 0101            4            4            3            2            1            1
+                         [imm]
+xor eax, imm             0110 0110             -            -           -            2            1            1
+                         0011 0101
+                         [imm]
+
+
+    a. Real mode, 16-bit segments.
+    b. Instructions with a 66h or 67h prefix are available only on 80386 and later processors.
+    c. Timings are all optimistic and do not include the cost of prefix bytes, hazards, fetching, misaligned oper-
+    ands, etc.
+    d. Cycle timings for HLT instruction are above and beyond the time spent waiting for an interrupt to occur.
+
+
+
+                                                                                                           Page 1401
+Appendix D
+
+   e. On the 80386 and most versions of later processors, the processor ignores the reg field’s value for the Scc
+   instruction; the reg field, however, should contain zero.
+   f. Most assemblers accept “xchg reg,mem” and encode it as “xchg mem,reg” which does the same thing.
+
+
+
+
+Page 1402
+
