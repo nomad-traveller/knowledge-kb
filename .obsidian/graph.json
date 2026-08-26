@@ -1,0 +1,12 @@
+{
+  "showTags": true,
+  "collapseFilter": false,
+  "search": "",
+  "showAttachments": false,
+  "groups": [
+    { "query": "path:wiki/concepts", "color": { "a": 1, "rgb": "#7c3aed" } },
+    { "query": "path:wiki/entities", "color": { "a": 1, "rgb": "#dc2626" } },
+    { "query": "path:wiki/sources",  "color": { "a": 1, "rgb": "#2563eb" } },
+    { "query": "path:wiki/analyses", "color": { "a": 1, "rgb": "#16a34a" } }
+  ]
+}

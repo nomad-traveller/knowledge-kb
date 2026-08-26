@@ -1,0 +1,16 @@
+/* OKF visual layer for the knowledge_base vault */
+/* Frontmatter stays machine-readable; this only styles rendered previews. */
+
+/* Color-code the file explorer by folder */
+.nav-folder-title[data-path^="wiki/concepts"] { color: #7c3aed; }
+.nav-folder-title[data-path^="wiki/entities"] { color: #dc2626; }
+.nav-folder-title[data-path^="wiki/sources"]  { color: #2563eb; }
+.nav-folder-title[data-path^="wiki/analyses"] { color: #16a34a; }
+
+/* Highlight the AoA hub and dashboard */
+.markdown-preview-view h1 { border-bottom: 2px solid #3b82f6; padding-bottom: 4px; }
+
+/* Tag pills */
+.cm-tag, .tag {
+  background: #1e293b; color: #e2e8f0; border-radius: 6px; padding: 1px 6px;
+}

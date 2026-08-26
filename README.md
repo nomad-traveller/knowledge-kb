@@ -26,3 +26,25 @@ maintained using **Karpathy's LLM Wiki pattern**.
 A directory of markdown files; each has YAML frontmatter with `type`,
 provenance (`sources`), trust (`generated`/`verified`), and lifecycle
 (`status`/`stale_after`). Spec: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
+
+## Obsidian integration
+
+`knowledge_base/` is a valid Obsidian vault (it contains `.obsidian/`). Open it directly,
+or mirror it to another machine (see "Syncing to your MacBook" below).
+
+- **Graph view**: colour-coded by category — concepts (purple), entities (red),
+  sources (blue), analyses (green). Configure in `.obsidian/graph.json`.
+- **Dataview dashboard**: open `okf-dashboard.md` (requires the Dataview plugin,
+  already enabled). It shows concepts by type, recent changes, untagged/stale gaps,
+  and the Art of Assembly chapter map — all live from frontmatter.
+- **CSS snippet**: `okf.css` colour-codes the file explorer by folder. Enable via
+  Settings → Appearance → CSS snippets → toggle "okf".
+- **Markdown links**: `app.json` forces `useMarkdownLinks: true` so links stay
+  portable (e.g. rsync/git) and OKF-bundle-relative (`/concepts/...`).
+
+### Syncing to your MacBook Air
+Either git-push/pull (recommended) or rsync over SSH:
+```
+rsync -avz --delete user@192.168.0.200:~/knowledge_base/ ~/knowledge_base/
+```
+Then open `~/knowledge_base` as a vault in Obsidian (desktop or mobile).
