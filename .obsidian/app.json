@@ -1,6 +1,12 @@
 {
+  "colorScheme": "native",
+  "cssSnippets": [
+    "okf"
+  ],
   "useMarkdownLinks": true,
   "newLinkFormat": "shortest",
   "alwaysUpdateLinks": true,
-  "userIgnoreFilters": ["raw/**/*.txt"]
+  "userIgnoreFilters": [
+    "raw/**/*.txt"
+  ]
 }

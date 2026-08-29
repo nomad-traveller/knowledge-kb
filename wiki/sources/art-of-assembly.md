@@ -43,3 +43,5 @@ See also the [AoA concept index](/concepts/art_of_assembly/).
 ## Navigation
 
 * [AoA Chapter Index (hub)](/concepts/art_of_assembly/index.md)
+
+Related: [Iczelion's Win32 Assembly Tutorials](sources/masm-tutorials.md) — Win32 protected-mode counterpart (80x86/MASM, Windows API, GUI, threading).

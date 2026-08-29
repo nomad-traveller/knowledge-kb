@@ -31,6 +31,17 @@
 * ["AoA Ch24: The PC Game Adapter"](concepts/art_of_assembly/aoa-ch24-the-pc-game-adapter.md) - Summary of Chapter 24 (The PC Game Adapter) of Randall Hyde's The Art of Assembly Language.
 * ["AoA Ch25: Optimizing Your Programs"](concepts/art_of_assembly/aoa-ch25-optimizing-your-programs.md) - Summary of Chapter 25 (Optimizing Your Programs) of Randall Hyde's The Art of Assembly Language.
 * ["The Art of Assembly Language — Chapter Index"](concepts/art_of_assembly/index.md) - Hub page linking every chapter summary of Randall Hyde's The Art of Assembly Language.
+* [Ex01 Hello](concepts/kr-ch1-masm/ex01-hello.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
+* [Ex02 Fahr Cel](concepts/kr-ch1-masm/ex02-fahr-cel.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
+* [Ex03 For Float](concepts/kr-ch1-masm/ex03-for-float.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
+* [Ex04 Symbolic](concepts/kr-ch1-masm/ex04-symbolic.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
+* [Ex05 Filecopy](concepts/kr-ch1-masm/ex05-filecopy.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
+* [Ex06 Charcount](concepts/kr-ch1-masm/ex06-charcount.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
+* [Ex07 Linecount](concepts/kr-ch1-masm/ex07-linecount.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
+* [Ex08 Wordcount](concepts/kr-ch1-masm/ex08-wordcount.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
+* [Ex09 Digit Hist](concepts/kr-ch1-masm/ex09-digit-hist.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
+* [Ex10 Power](concepts/kr-ch1-masm/ex10-power.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
+* [K&R Ch 1 → MASM 32-bit](concepts/kr-ch1-masm/index.md) - 32-bit MASM equivalents of every C example in Kernighan & Ritchie Chapter 1.
 * [LLM Wiki Pattern](concepts/llm-wiki-pattern.md) - Karpathy's pattern for a persistent, LLM-maintained interlinked wiki that compounds knowledge over time.
 * [MASM Assembler](concepts/masm-assembler.md) - Microsoft Macro Assembler — the assembler Randall Hyde uses to teach 80x86 assembly in AoA.
 * [Open Knowledge Format (OKF)](concepts/open-knowledge-format.md) - Google's open, human- and agent-friendly format for knowledge bundles (markdown + YAML frontmatter).
@@ -43,9 +54,11 @@
 
 ## Sources
 
+* [The ANSI C Programming Language](sources/ansi_c_kernighan_ritchie.md) - The definitive reference for the C programming language — second edition (ANSI C / C89) by Kernighan and Ritchie.
 * [The Art of Assembly Language (AoA)](sources/art-of-assembly.md) - Randall Hyde's classic 80x86/MASM assembly language textbook — 25 chapters + appendices.
 * [Google OKF SPEC.md](sources/google-okf-spec.md) - Canonical specification of the Open Knowledge Format v0.2.
 * [Karpathy — LLM Wiki](sources/karpathy-llm-wiki.md) - Origin essay describing the LLM-maintained persistent wiki pattern.
+* [Iczelion's Win32 Assembly Tutorials](sources/masm-tutorials.md) - 35-step Win32 assembly programming tutorial series — from basic skeleton programs through GUI, threading, DLLs, and debugging.
 
 ## Analyses
 

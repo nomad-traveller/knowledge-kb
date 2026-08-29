@@ -1,6 +1,7 @@
 {
   "cssTheme": "",
   "baseFontSize": 16,
-  "colorScheme": "native",
-  "cssSnippets": ["okf"]
+  "enabledCssSnippets": [
+    "okf"
+  ]
 }

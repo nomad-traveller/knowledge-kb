@@ -31,3 +31,6 @@ Covered in [AoA Ch8](/concepts/art_of_assembly/aoa-ch08-masm-directives-pseudo-o
 
 * [Intel 80x86 architecture](/entities/80x86.md)
 * [The Art of Assembly Language (source)](/sources/art-of-assembly.md)
+
+* [Iczelion's Win32 Assembly Tutorials](/sources/masm-tutorials.md)
+* [The ANSI C Programming Language (K&R)](/sources/ansi_c_kernighan_ritchie.md)
