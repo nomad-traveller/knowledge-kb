@@ -4,3 +4,4 @@ raw/assets/*
 # local cache / editor noise
 .DS_Store
 *.swp
+.obsidian/workspace.json
