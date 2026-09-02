@@ -1,45 +1,38 @@
 ---
 type: Reference
-title: Knowledge Base Overview
-description: Orientation page for this OKF-based personal knowledge base.
+title: Overview
+description: Orientation page for this OKF knowledge base template.
 status: stable
-generated: { by: human:user, at: 2026-08-26T00:00:00Z }
 ---
 
 # Overview
 
-This is a personal knowledge base built on two complementary ideas:
+This is an **empty OKF v0.2 knowledge base template** — a ready-to-copy storage
+vault for any topic. All topic content from the original demo (assembly, C,
+natural units) has been removed; only the structural layer remains.
 
-1. **Google Open Knowledge Format (OKF)** — the *container*. A bundle of
-   markdown files with YAML frontmatter. Every concept carries `type`,
-   provenance (`sources`), trust (`generated`/`verified`), and lifecycle
-   (`status`/`stale_after`) as first-class, machine-readable fields. See
-   [Open Knowledge Format](concepts/open-knowledge-format.md).
+## How this vault is organized
 
-2. **Karpathy's LLM Wiki pattern** — the *process*. Raw sources are immutable
-   (in `raw/`). An LLM reads them and compiles/maintains an interlinked wiki
-   (in `wiki/`), so knowledge compounds instead of being rediscovered on every
-   query. See [LLM Wiki Pattern](concepts/llm-wiki-pattern.md).
+- `raw/` — immutable sources you drop in (PDFs, markdown, exports)
+- `wiki/sources/` — one summary page per ingested source
+- `wiki/concepts/` — ideas, methods, patterns
+- `wiki/entities/` — people, orgs, tools
+- `wiki/analyses/` — syntheses and comparisons
+- `wiki/references/` — external material, run instructions
 
-## How to use it
+The workflow (ingest → summarize → cross-link → index → log) is defined in
+`AGENTS.md` at the vault root.
 
-- **Ingest**: drop a source into `raw/` and ask the LLM to process it. The LLM
-  writes a `sources/<slug>.md` summary and updates relevant `entities/`,
-  `concepts/`, and `analyses/` pages, then appends to `log.md`.
-- **Query**: ask questions against the wiki; answers with durable value get
-  filed back as new pages.
-- **Lint**: periodically run `python3 tools/okf.py lint` to catch orphans,
-  broken links, missing frontmatter, and stale concepts.
+## What is already here
 
-## What's here now
+- [LLM Wiki Pattern](/concepts/llm-wiki-pattern.md) — the maintenance pattern itself.
+- [Open Knowledge Format (OKF)](/concepts/open-knowledge-format.md) — the file format.
+- [Karpathy — LLM Wiki](/sources/karpathy-llm-wiki.md) — origin essay (source kept in `raw/`).
+- [Google OKF Specification](/sources/google-okf-spec.md) — the spec (source kept in `raw/`).
+- [Google Cloud / knowledge-catalog](/entities/google-cloud.md) — OKF publisher.
 
-- `concepts/` — the two foundational ideas this base is built on.
-- `sources/` — summaries of the seed materials (the two URLs provided).
-- `entities/` — publishers/orgs referenced.
-- `analyses/` — reserved for comparison/synthesis pages you produce over time.
+## Starting a new topic vault
 
-See the [index](index.md) for the full catalog.
-
-## Integrated corpora
-
-* [The Art of Assembly Language](/concepts/art_of_assembly/index.md) — 25 chapter summaries integrated from PDFs in `raw/art_of_assembly/`.
+1. Copy this folder.
+2. Add sources to `raw/` and let an agent ingest them per `AGENTS.md`.
+3. Update this overview with the topic's scope and entry points.

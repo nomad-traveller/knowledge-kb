@@ -1,7 +1,8 @@
-# knowledge_base
+# Knowledge Base Template
 
-A personal knowledge base built on **Google Open Knowledge Format (OKF) v0.2**,
-maintained using **Karpathy's LLM Wiki pattern**.
+A reusable, empty knowledge base built on **Google Open Knowledge Format (OKF) v0.2**,
+maintained using **Karpathy's LLM Wiki pattern**. Copy this folder to start a new
+topic vault; everything structural is included, no content is preset.
 
 - `raw/`        — immutable source documents (you add, the LLM only reads)
 - `wiki/`       — the OKF bundle: LLM-generated, interlinked markdown + frontmatter
@@ -29,22 +30,14 @@ provenance (`sources`), trust (`generated`/`verified`), and lifecycle
 
 ## Obsidian integration
 
-`knowledge_base/` is a valid Obsidian vault (it contains `.obsidian/`). Open it directly,
-or mirror it to another machine (see "Syncing to your MacBook" below).
+This folder is a valid Obsidian vault (it contains `.obsidian/`).
 
 - **Graph view**: colour-coded by category — concepts (purple), entities (red),
   sources (blue), analyses (green). Configure in `.obsidian/graph.json`.
 - **Dataview dashboard**: open `okf-dashboard.md` (requires the Dataview plugin,
-  already enabled). It shows concepts by type, recent changes, untagged/stale gaps,
-  and the Art of Assembly chapter map — all live from frontmatter.
+  already enabled). It shows pages by type, recent changes, untagged/stale gaps —
+  all live from frontmatter.
 - **CSS snippet**: `okf.css` colour-codes the file explorer by folder. Enable via
   Settings → Appearance → CSS snippets → toggle "okf".
 - **Markdown links**: `app.json` forces `useMarkdownLinks: true` so links stay
   portable (e.g. rsync/git) and OKF-bundle-relative (`/concepts/...`).
-
-### Syncing to your MacBook Air
-Either git-push/pull (recommended) or rsync over SSH:
-```
-rsync -avz --delete user@192.168.0.200:~/knowledge_base/ ~/knowledge_base/
-```
-Then open `~/knowledge_base` as a vault in Obsidian (desktop or mobile).

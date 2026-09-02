@@ -5,60 +5,17 @@
 
 ## Concepts
 
-* ["AoA Ch01: Data Representation"](concepts/art_of_assembly/aoa-ch01-data-representation.md) - Summary of Chapter 01 (Data Representation) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch02: Boolean Algebra"](concepts/art_of_assembly/aoa-ch02-boolean-algebra.md) - Summary of Chapter 02 (Boolean Algebra) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch03: System Organization"](concepts/art_of_assembly/aoa-ch03-system-organization.md) - Summary of Chapter 03 (System Organization) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch04: Memory Layout and Access"](concepts/art_of_assembly/aoa-ch04-memory-layout-and-access.md) - Summary of Chapter 04 (Memory Layout and Access) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch05: Variables and Data Structures"](concepts/art_of_assembly/aoa-ch05-variables-and-data-structures.md) - Summary of Chapter 05 (Variables and Data Structures) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch06: The 80x86 Instruction Set"](concepts/art_of_assembly/aoa-ch06-the-80x86-instruction-set.md) - Summary of Chapter 06 (The 80x86 Instruction Set) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch07: The UCR Standard Library"](concepts/art_of_assembly/aoa-ch07-the-ucr-standard-library.md) - Summary of Chapter 07 (The UCR Standard Library) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch08: MASM: Directives & Pseudo-Opcodes"](concepts/art_of_assembly/aoa-ch08-masm-directives-pseudo-opcodes.md) - Summary of Chapter 08 (MASM: Directives & Pseudo-Opcodes) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch09: Arithmetic and Logical Operations"](concepts/art_of_assembly/aoa-ch09-arithmetic-and-logical-operations.md) - Summary of Chapter 09 (Arithmetic and Logical Operations) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch10: Control Structures"](concepts/art_of_assembly/aoa-ch10-control-structures.md) - Summary of Chapter 10 (Control Structures) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch11: Procedures and Functions"](concepts/art_of_assembly/aoa-ch11-procedures-and-functions.md) - Summary of Chapter 11 (Procedures and Functions) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch12: Procedures: Advanced Topics"](concepts/art_of_assembly/aoa-ch12-procedures-advanced-topics.md) - Summary of Chapter 12 (Procedures: Advanced Topics) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch13: MS-DOS, PC-BIOS, and File I/O"](concepts/art_of_assembly/aoa-ch13-ms-dos-pc-bios-and-file-i-o.md) - Summary of Chapter 13 (MS-DOS, PC-BIOS, and File I/O) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch14: Floating Point Arithmetic"](concepts/art_of_assembly/aoa-ch14-floating-point-arithmetic.md) - Summary of Chapter 14 (Floating Point Arithmetic) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch15: Strings and Character Sets"](concepts/art_of_assembly/aoa-ch15-strings-and-character-sets.md) - Summary of Chapter 15 (Strings and Character Sets) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch16: Pattern Matching"](concepts/art_of_assembly/aoa-ch16-pattern-matching.md) - Summary of Chapter 16 (Pattern Matching) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch17: Interrupts, Traps, and Exceptions"](concepts/art_of_assembly/aoa-ch17-interrupts-traps-and-exceptions.md) - Summary of Chapter 17 (Interrupts, Traps, and Exceptions) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch18: Resident Programs"](concepts/art_of_assembly/aoa-ch18-resident-programs.md) - Summary of Chapter 18 (Resident Programs) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch19: Processes, Coroutines, and Concurrency"](concepts/art_of_assembly/aoa-ch19-processes-coroutines-and-concurrency.md) - Summary of Chapter 19 (Processes, Coroutines, and Concurrency) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch20: The PC Keyboard"](concepts/art_of_assembly/aoa-ch20-the-pc-keyboard.md) - Summary of Chapter 20 (The PC Keyboard) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch21: The PC Parallel Ports"](concepts/art_of_assembly/aoa-ch21-the-pc-parallel-ports.md) - Summary of Chapter 21 (The PC Parallel Ports) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch22: The PC Serial Ports"](concepts/art_of_assembly/aoa-ch22-the-pc-serial-ports.md) - Summary of Chapter 22 (The PC Serial Ports) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch23: The PC Video Display"](concepts/art_of_assembly/aoa-ch23-the-pc-video-display.md) - Summary of Chapter 23 (The PC Video Display) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch24: The PC Game Adapter"](concepts/art_of_assembly/aoa-ch24-the-pc-game-adapter.md) - Summary of Chapter 24 (The PC Game Adapter) of Randall Hyde's The Art of Assembly Language.
-* ["AoA Ch25: Optimizing Your Programs"](concepts/art_of_assembly/aoa-ch25-optimizing-your-programs.md) - Summary of Chapter 25 (Optimizing Your Programs) of Randall Hyde's The Art of Assembly Language.
-* ["The Art of Assembly Language — Chapter Index"](concepts/art_of_assembly/index.md) - Hub page linking every chapter summary of Randall Hyde's The Art of Assembly Language.
-* [Ex01 Hello](concepts/kr-ch1-masm/ex01-hello.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
-* [Ex02 Fahr Cel](concepts/kr-ch1-masm/ex02-fahr-cel.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
-* [Ex03 For Float](concepts/kr-ch1-masm/ex03-for-float.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
-* [Ex04 Symbolic](concepts/kr-ch1-masm/ex04-symbolic.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
-* [Ex05 Filecopy](concepts/kr-ch1-masm/ex05-filecopy.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
-* [Ex06 Charcount](concepts/kr-ch1-masm/ex06-charcount.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
-* [Ex07 Linecount](concepts/kr-ch1-masm/ex07-linecount.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
-* [Ex08 Wordcount](concepts/kr-ch1-masm/ex08-wordcount.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
-* [Ex09 Digit Hist](concepts/kr-ch1-masm/ex09-digit-hist.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
-* [Ex10 Power](concepts/kr-ch1-masm/ex10-power.md) - 32-bit MASM equivalent of K&R Chapter 1 example.
-* [K&R Ch 1 → MASM 32-bit](concepts/kr-ch1-masm/index.md) - 32-bit MASM equivalents of every C example in Kernighan & Ritchie Chapter 1.
 * [LLM Wiki Pattern](concepts/llm-wiki-pattern.md) - Karpathy's pattern for a persistent, LLM-maintained interlinked wiki that compounds knowledge over time.
-* [MASM Assembler](concepts/masm-assembler.md) - Microsoft Macro Assembler — the assembler Randall Hyde uses to teach 80x86 assembly in AoA.
 * [Open Knowledge Format (OKF)](concepts/open-knowledge-format.md) - Google's open, human- and agent-friendly format for knowledge bundles (markdown + YAML frontmatter).
 
 ## Entities
 
-* [Intel 80x86 (x86) Architecture](entities/80x86.md) - The CISC microprocessor family that The Art of Assembly Language targets (8088/80286/80386/80486 era).
 * [Google Cloud / knowledge-catalog](entities/google-cloud.md) - Publisher of the Open Knowledge Format (OKF) specification.
-* [Randall Hyde](entities/randall-hyde.md) - Author of The Art of Assembly Language and the UCR Standard Library.
 
 ## Sources
 
-* [The ANSI C Programming Language](sources/ansi_c_kernighan_ritchie.md) - The definitive reference for the C programming language — second edition (ANSI C / C89) by Kernighan and Ritchie.
-* [The Art of Assembly Language (AoA)](sources/art-of-assembly.md) - Randall Hyde's classic 80x86/MASM assembly language textbook — 25 chapters + appendices.
 * [Google OKF SPEC.md](sources/google-okf-spec.md) - Canonical specification of the Open Knowledge Format v0.2.
 * [Karpathy — LLM Wiki](sources/karpathy-llm-wiki.md) - Origin essay describing the LLM-maintained persistent wiki pattern.
-* [Iczelion's Win32 Assembly Tutorials](sources/masm-tutorials.md) - 35-step Win32 assembly programming tutorial series — from basic skeleton programs through GUI, threading, DLLs, and debugging.
 
 ## Analyses
 
