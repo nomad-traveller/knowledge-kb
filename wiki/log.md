@@ -20,4 +20,4 @@ Paths are bundle-relative (e.g. `wiki/concepts/foo.md`, `raw/foo.pdf`).
 2026-09-02 | maintenance | . | Template reset: removed all topic content (AoA, MASM, K&R, natural units, Newtonian mechanics, FreeToken chat). Prior content recoverable via git history (commit e8247f2 is the reset).
 2026-09-02 | maintenance | README.md | Rewritten as generic template description.
 2026-09-02 | maintenance | wiki/overview.md | Rewritten as generic template overview.
-2026-09-02 | maintenance | okf-dashboard.md | Generalized (removed AoA chapter map).
+2026-09-02 | maintenance | okf-dashboard.md | Generalized (removed AoA chapter map).2026-09-02 | update | templates/source.md | Added Cross-links section so source pages link to related entities (prevents orphaned entities).

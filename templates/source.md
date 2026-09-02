@@ -27,4 +27,8 @@ sources:
 
 - <Known biases, outdated content, contradictions with other sources>
 
+## Cross-links
+
+- [<Related entity/concept>](/entities/<related>.md)
+
 [^<source-id>]: <full citation>
