@@ -1,45 +1,38 @@
-# Knowledge Base Template
+# knowledge-kb
 
-A reusable, empty knowledge base built on **Google Open Knowledge Format (OKF) v0.2**,
-maintained using **Karpathy's LLM Wiki pattern**. Copy this folder to start a new
-topic vault; everything structural is included, no content is preset.
+An Open Knowledge Format (OKF) v0.2 knowledge base maintained with the
+LLM-wiki pattern (Karpathy): a persistent, interlinked wiki that compounds
+knowledge over time — written and extended collaboratively by humans and
+LLM agents.
 
-- `raw/`        — immutable source documents (you add, the LLM only reads)
-- `wiki/`       — the OKF bundle: LLM-generated, interlinked markdown + frontmatter
-  - `index.md`    catalog (regenerated)
-  - `log.md`     change history
-  - `overview.md` orientation
-  - `sources/`, `entities/`, `concepts/`, `analyses/`, `references/`
-- `AGENTS.md`   — the schema: how an LLM should ingest / query / lint this wiki
-- `tools/okf.py`— OKF validator, index generator, and linter (no external deps)
+- `AGENTS.md` — schema + agent rules (frontmatter, workflows, lint rules)
+- `wiki/` — the knowledge base: `concepts/`, `entities/`, `sources/`,
+  `analyses/`, `references/`, plus `index.md` (catalog) and `log.md` (audit log)
+- `raw/` — immutable source material; `raw/inbox/` for unprocessed notes
+- `templates/` — mandatory page skeletons (`concept.md`, `source.md`,
+  `entity.md`, `analysis.md`)
+- `tools/okf.py` — linter and index builder
 
-## Quick start
-1. Put a source (article, paper, pdf) into `raw/`.
-2. Ask your LLM agent to ingest it (it follows `AGENTS.md`, starting from
-   a skeleton in `templates/`).
-3. Browse `wiki/` — e.g. in Obsidian. For queries, start at `wiki/index.md`
-   (the catalog); agents should too.
-4. Periodically run:
-   ```bash
-   python3 tools/okf.py lint
-   python3 tools/okf.py rebuild-index
-   ```
+## Working with the repo
 
-## OKF in one line
-A directory of markdown files; each has YAML frontmatter with `type`,
-provenance (`sources`), trust (`generated`/`verified`), and lifecycle
-(`status`/`stale_after`). Spec: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
+```bash
+git clone https://github.com/nomad-traveller/knowledge-kb.git
+cd knowledge-kb
+python3 tools/okf.py lint           # check before committing
+python3 tools/okf.py rebuild-index  # regenerate wiki/index.md after changes
+```
 
-## Obsidian integration
+## Workflows (short form — see AGENTS.md for details)
 
-This folder is a valid Obsidian vault (it contains `.obsidian/`).
+1. **Ingest**: put source material in `raw/`, write a summary page in
+   `wiki/sources/`, update related concepts/entities/analyses with
+   cross-links, rebuild the index, append to `wiki/log.md`.
+2. **Inbox**: quick notes and brain dumps go in `raw/inbox/`; refactor them
+   into `wiki/concepts/` drafts, then move the note to
+   `raw/inbox/processed/`.
+3. **Query**: read `wiki/index.md` first, drill into relevant pages,
+   synthesize with citations; file durable answers as analyses.
 
-- **Graph view**: colour-coded by category — concepts (purple), entities (red),
-  sources (blue), analyses (green). Configure in `.obsidian/graph.json`.
-- **Dataview dashboard**: open `okf-dashboard.md` (requires the Dataview plugin,
-  already enabled). It shows pages by type, recent changes, untagged/stale gaps —
-  all live from frontmatter.
-- **CSS snippet**: `okf.css` colour-codes the file explorer by folder. Enable via
-  Settings → Appearance → CSS snippets → toggle "okf".
-- **Markdown links**: `app.json` forces `useMarkdownLinks: true` so links stay
-  portable (e.g. rsync/git) and OKF-bundle-relative (`/concepts/...`).
+Hard rules: never cite sources not in `raw/` or the page's frontmatter;
+pages with unverified claims stay `status: draft`; every page body begins
+with a `## Summary` section.
