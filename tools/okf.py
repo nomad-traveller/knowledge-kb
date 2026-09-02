@@ -174,6 +174,8 @@ def cmd_lint():
     inbound = {}        # target rel -> count
     all_rels = set()
     fm_cache = {}
+    MAX_LINES = 300
+    SLUG_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*\.md$")
     for rel, ap, fm, body in iter_concepts():
         all_rels.add(rel)
         fm_cache[rel] = fm or {}
@@ -201,6 +203,23 @@ def cmd_lint():
             dt = parse_iso(str(sa))
             if dt and dt <= now():
                 print("LINT: %s is stale (stale_after %s)" % (rel, sa)); problems += 1
+        # head-first summary rule
+        if "## Summary" not in body:
+            print("LINT: %s missing '## Summary' section (head-first rule)" % rel); problems += 1
+        else:
+            idx = body.find("## Summary")
+            nxt = body.find("##", idx + 12)
+            section = body[idx + 12: nxt if nxt != -1 else len(body)]
+            if len(section.strip()) < 40:
+                print("LINT: %s '## Summary' is too short (<40 chars)" % rel); problems += 1
+        # page length cap
+        nlines = body.count("\n") + 1
+        if nlines > MAX_LINES:
+            print("LINT: %s is %d lines (> %d) — split it" % (rel, nlines, MAX_LINES)); problems += 1
+        # filename slug rule
+        base = os.path.basename(rel)
+        if not SLUG_RE.match(base):
+            print("LINT: %s bad filename (use kebab-case ASCII slug, no dates/spaces)" % rel); problems += 1
     # broken links
     for rel, targets in concept_links.items():
         for t in targets:

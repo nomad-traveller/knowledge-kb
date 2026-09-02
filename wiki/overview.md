@@ -23,6 +23,10 @@ natural units) has been removed; only the structural layer remains.
 The workflow (ingest → summarize → cross-link → index → log) is defined in
 `AGENTS.md` at the vault root.
 
+**Query routing**: read `wiki/index.md` FIRST — it is the catalog of every page
+(title + one-line description). Drill into pages from there; do not wander the
+folder tree. `tools/okf.py stats` gives a quick type overview.
+
 ## What is already here
 
 - [LLM Wiki Pattern](/concepts/llm-wiki-pattern.md) — the maintenance pattern itself.

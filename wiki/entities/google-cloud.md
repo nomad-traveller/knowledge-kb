@@ -14,6 +14,8 @@ sources:
 
 # Google Cloud / knowledge-catalog
 
+## Summary
+
 The Google Cloud team maintains the [`knowledge-catalog`](
 https://github.com/GoogleCloudPlatform/knowledge-catalog) repository, which
 publishes the **Open Knowledge Format (OKF)** specification under `okf/SPEC.md`.

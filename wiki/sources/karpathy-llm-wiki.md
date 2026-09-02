@@ -16,6 +16,8 @@ sources:
 
 # Karpathy — LLM Wiki
 
+## Summary
+
 Source essay by Andrej Karpathy (2026-04-04): *A pattern for building personal
 knowledge bases using LLMs.* Defines the three-layer architecture (raw sources /
 LLM-owned wiki / schema) and the ingest-query-lint operations. Full text retained

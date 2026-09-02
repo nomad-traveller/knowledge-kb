@@ -16,6 +16,8 @@ sources:
 
 # Google OKF SPEC.md
 
+## Summary
+
 Canonical spec of **Open Knowledge Format v0.2** from GoogleCloudPlatform's
 `knowledge-catalog` repo. Full text retained in `raw/google-okf-spec.md`.
 

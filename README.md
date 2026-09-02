@@ -15,8 +15,10 @@ topic vault; everything structural is included, no content is preset.
 
 ## Quick start
 1. Put a source (article, paper, pdf) into `raw/`.
-2. Ask your LLM agent to ingest it (it follows `AGENTS.md`).
-3. Browse `wiki/` — e.g. in Obsidian.
+2. Ask your LLM agent to ingest it (it follows `AGENTS.md`, starting from
+   a skeleton in `templates/`).
+3. Browse `wiki/` — e.g. in Obsidian. For queries, start at `wiki/index.md`
+   (the catalog); agents should too.
 4. Periodically run:
    ```bash
    python3 tools/okf.py lint

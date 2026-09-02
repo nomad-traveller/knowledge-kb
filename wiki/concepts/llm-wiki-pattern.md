@@ -15,6 +15,8 @@ sources:
 
 # LLM Wiki Pattern
 
+## Summary
+
 Most LLM+document workflows are **RAG**: upload files, retrieve chunks at query
 time, generate an answer. The LLM *rediscovers* knowledge from scratch every
 question — nothing accumulates.[^karpathy-llm-wiki]
