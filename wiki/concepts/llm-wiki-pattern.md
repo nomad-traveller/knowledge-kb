@@ -57,3 +57,4 @@ note is missing — each wiki page records how it was verified.
 ## Seed references
 
 - Source summary: [Karpathy — LLM Wiki](/sources/karpathy-llm-wiki.md)
+- Related: [Knowledge Collaboration Workflow](/analyses/knowledge-collaboration-summary.md)
