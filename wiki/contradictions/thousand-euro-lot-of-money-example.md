@@ -9,16 +9,16 @@ claims:
   - id: not-a-lot
     statement: "1000 EUR is not a lot of money."
     source: this conversation
-    scope: "speaker's comparison standard unstated (unspecified)"
+    scope: "reference class: born into wealth, 1000 EUR negligible vs. normal; comparison standard otherwise unspecified"
     class: frame-variable
-    actor: human:coworker-a
+    actor: human:coworker-rich-born
     at: 2026-09-03T00:00:00Z
   - id: is-a-lot
     statement: "1000 EUR is a lot of money."
     source: this conversation
-    scope: "speaker's comparison standard unstated (unspecified)"
+    scope: "reference class: rose from poverty, 1000 EUR = months of hard work; comparison standard otherwise unspecified"
     class: frame-variable
-    actor: human:coworker-b
+    actor: human:coworker-self-made
     at: 2026-09-03T00:00:00Z
 resolution: resolved
 resolved_by: "parameterization — both kept as conditional claims; residual vagueness addressed by threshold stipulation, which converts class"
@@ -51,8 +51,8 @@ example; under workflow step 0 a live vault would record no dispute here.
 | | Claim A | Claim B |
 |---|---|---|
 | Statement | 1000 EUR is not a lot | 1000 EUR is a lot |
-| Asserted by | coworker-a | coworker-b |
-| Scope | unstated | unstated |
+| Asserted by | coworker-rich-born | coworker-self-made |
+| Scope | reference class: born wealthy; negligible vs. their normal | reference class: rose from poverty; months of hard work |
 | Class | frame-variable | frame-variable |
 
 ## Evidence
@@ -71,6 +71,18 @@ example; under workflow step 0 a live vault would record no dispute here.
 to each claim: "not a lot *for speaker A's monthly income / for a laptop
 purchase*" vs. "a lot *for B's income / for a weekly shop*". Both survive;
 neither is wrong.
+
+**Step 1b — the hidden parameter may be biography, not situation:** the two
+speakers can share the *objective* frame entirely (same sum, same country, same
+week) and still both be right, because gradable predicates index a **reference
+class** that the speaker carries from their life history. The person who rose
+from poverty anchors "a lot" to scarcity — 1000€ measures months of
+discipline. The person born wealthy anchors to abundance — 1000€ is
+negligible against their normal. `scope` must therefore record *who* is
+comparing against *what baseline*, and `actor` becomes epistemically
+load-bearing: the same predicate flips class within one person over time (the
+self-made earner, now rich, says "trivial" — not dishonesty, a moved reference
+class).
 
 **Step 2 — the residual (why this case beats the sky example):** "a lot" has no
 sharp boundary. Two speakers with an identical complete frame can still

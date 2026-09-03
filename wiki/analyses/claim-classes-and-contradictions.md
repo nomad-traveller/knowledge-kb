@@ -89,6 +89,14 @@ is safe."[^conversation]
   it behaves like class 2.
 - **Vault policy:** contested claims require a `scope` field — an unframed
   claim is an uncheckable claim.
+- **Frame-variable claims may be speaker-indexed (reference class):** the
+  hidden parameter can be the *speaker's biography*, not the situation.
+  "1000 EUR is a lot" is anchored to scarcity for the self-made poor-to-rich
+  earner and to abundance for the rich-born — same objective frame, both true,
+  because gradable predicates can index the assertor's life history. This also
+  shifts within one person over time (the self-made man now says "negligible"),
+  so `scope` should record the reference class and `actor` becomes
+  epistemically load-bearing, not just provenance.
 - **Vague predicates are the subclass that bites back:** for gradable words
   ("a lot", "hot", "fast"), even identical frames may not dissolve the
   conflict — the boundary is fuzzy (sorites). Evidence can never settle these;

@@ -8,6 +8,9 @@ programmatically — one line per action, pipe-separated:
 ACTION is one of: create, update, deprecate, delete, ingest, rebuild, maintenance.
 Paths are bundle-relative (e.g. `wiki/concepts/foo.md`, `raw/foo.pdf`).
 
+2026-09-03 | update | wiki/analyses/claim-classes-and-contradictions.md | Added reference-class rule: gradable predicates may index the speaker's biography; scope must record baseline, actor becomes epistemically load-bearing.
+2026-09-03 | update | wiki/contradictions/thousand-euro-lot-of-money-example.md | Adjudication step 1b: self-made vs rich-born anchors; class shifts within one person over time.
+2026-09-03 | maintenance | templates/contradiction.md | scope field now names speaker's reference class as part of the frame.
 2026-09-03 | create | wiki/contradictions/thousand-euro-lot-of-money-example.md | Worked example: vague-predicate conflict (gradable "a lot"), resolved by threshold-stipulation converting claim class; cross-linked.
 2026-09-03 | create | wiki/analyses/claim-classes-and-contradictions.md | Claim-class taxonomy (necessary / frame-fixed / frame-variable) with triage order and misclassification table.
 2026-09-03 | create | wiki/contradictions/sky-blue-vs-grey-example.md | Worked example: frame-variable apparent contradiction resolved by parameterization; golden reference for scope/class fields.

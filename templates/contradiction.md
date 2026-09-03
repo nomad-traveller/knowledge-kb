@@ -10,7 +10,7 @@ claims:
   - id: <claim-a>
     statement: <the claim as made>
     source: <sources[].id or page path>
-    scope: <frame: when / where / conditions / definition-version>   # required; if unknown: "unspecified"
+    scope: <frame: when / where / conditions / definition-version / speaker's reference class (baseline, life context)>   # required; if unknown: "unspecified"
     class: <necessary|frame-fixed|frame-variable>
     actor: <who/what asserted it, e.g. agent/hy4-preview>
     at: <ISO8601Z>
