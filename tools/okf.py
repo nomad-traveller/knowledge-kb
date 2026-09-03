@@ -238,6 +238,82 @@ def cmd_lint():
     return 1 if problems else 0
 
 
+def _contradiction_issues():
+    """Return (warnings, errors) for type: Contradiction pages.
+
+    Checks:
+      - resolution: resolved but no resolved_by
+      - fewer than 2 claims entries
+      - open past stale_after
+      - pages with inline '## Contradictions' entries still marked stable
+    """
+    warnings, errors = [], []
+    INLINE_RE = re.compile(r"status:\s*open\b", re.I)
+    for rel, ap, fm, body in iter_concepts():
+        if fm is None:
+            continue
+        ftype = str(fm.get("type", "")).strip().lower()
+        raw_fm = _raw_frontmatter(ap)
+
+        if ftype == "contradiction":
+            # count entries under 'claims:' only — 'sources:' uses the same
+            # '- id:' shape and would otherwise inflate the count.
+            m_claims = re.search(r"^claims:\s*\n((?:^[ \t]+.*\n?)*)", raw_fm, re.M)
+            claims_block = m_claims.group(1) if m_claims else ""
+            claims = re.findall(r"^\s*-\s+id:\s*\S+", claims_block, re.M)
+            if len(claims) < 2:
+                errors.append("%s is a Contradiction with %d claims (need >= 2)"
+                              % (rel, len(claims)))
+            res = str(fm.get("resolution", "")).strip().lower()
+            if res == "resolved" and not str(fm.get("resolved_by", "")).strip():
+                errors.append("%s is resolved but has no 'resolved_by'" % rel)
+            if res not in ("open", "resolved"):
+                errors.append("%s has invalid resolution %r (want open|resolved)"
+                              % (rel, res))
+            elif res == "open":
+                sa = fm.get("stale_after")
+                dt = parse_iso(str(sa)) if sa else None
+                if dt and dt <= now():
+                    warnings.append("%s is an OPEN contradiction past stale_after (%s)"
+                                    % (rel, sa))
+        else:
+            # inline contradictions on ordinary pages
+            if "## Contradictions" in body and INLINE_RE.search(body):
+                if str(fm.get("status", "stable")).strip().lower() != "draft":
+                    errors.append(
+                        "%s has an open inline contradiction but status is not draft" % rel)
+    return warnings, errors
+
+
+def _raw_frontmatter(ap):
+    """Return the raw frontmatter text (for list counting the mini-YAML can't do)."""
+    with open(ap, encoding="utf-8") as f:
+        text = f.read()
+    m = FRONTMATTER_RE.match(text)
+    return m.group(1) if m else ""
+
+
+def cmd_contradictions():
+    """List all open contradictions in the bundle."""
+    open_items, resolved_items = [], []
+    for rel, ap, fm, body in iter_concepts():
+        if fm is None:
+            continue
+        ftype = str(fm.get("type", "")).strip().lower()
+        if ftype == "contradiction":
+            res = str(fm.get("resolution", "open")).strip().lower()
+            title = fm.get("title") or os.path.splitext(os.path.basename(rel))[0]
+            line = "  %-55s %s" % (title, res)
+            (open_items if res != "resolved" else resolved_items).append(line)
+    print("Open contradictions:")
+    print("\n".join(open_items) if open_items else "  (none)")
+    print("")
+    print("Resolved contradictions: %d" % len(resolved_items))
+    for line in resolved_items:
+        print(line)
+    return 0
+
+
 def main(argv):
     if not os.path.isdir(WIKI):
         print("ERROR: wiki/ not found at %s" % WIKI)
@@ -250,9 +326,20 @@ def main(argv):
     if cmd == "rebuild-index":
         return cmd_rebuild_index()
     if cmd == "lint":
-        return cmd_lint()
+        rc = cmd_lint()
+        warns, errs = _contradiction_issues()
+        for w in warns:
+            print("LINT: %s" % w)
+        for e in errs:
+            print("LINT: %s" % e)
+        total = len(warns) + len(errs)
+        if total:
+            print("lint: %d contradiction issue(s) found." % total)
+        return 1 if (rc or errs) else 0
+    if cmd == "contradictions":
+        return cmd_contradictions()
     print("unknown command: %s" % cmd)
-    print("usage: okf.py [validate|stats|rebuild-index|lint]")
+    print("usage: okf.py [validate|stats|rebuild-index|lint|contradictions]")
     return 2
 
 

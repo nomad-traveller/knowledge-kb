@@ -9,6 +9,7 @@
 
 ## Concepts
 
+* [Contradiction Protocol](concepts/contradiction-protocol.md) - How this vault captures, adjudicates, and resolves disagreements between sources, agents, and pages instead of averaging them away.
 * [LLM Wiki Pattern](concepts/llm-wiki-pattern.md) - Karpathy's pattern for a persistent, LLM-maintained interlinked wiki that compounds knowledge over time.
 * [Open Knowledge Format (OKF)](concepts/open-knowledge-format.md) - Google's open, human- and agent-friendly format for knowledge bundles (markdown + YAML frontmatter).
 

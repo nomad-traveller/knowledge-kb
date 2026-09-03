@@ -58,3 +58,4 @@ note is missing — each wiki page records how it was verified.
 
 - Source summary: [Karpathy — LLM Wiki](/sources/karpathy-llm-wiki.md)
 - Related: [Knowledge Collaboration Workflow](/analyses/knowledge-collaboration-summary.md)
+- Related: [Contradiction Protocol](/concepts/contradiction-protocol.md)

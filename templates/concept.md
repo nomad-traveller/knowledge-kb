@@ -25,6 +25,15 @@ read only the head; core claim here, details below.>
 <Structured content: headings, tables, lists. Prefer structure over prose.
 Per-claim attribution via footnotes keyed to sources[].id [^<source-id>].>
 
+## Contradictions
+
+<!-- Record disagreements here instead of averaging them away. Delete this
+     block if none. One entry per conflict; keep 'status' current. -->
+- **Claim:** <the statement that is disputed>
+  - Opposed by: <the competing claim, source, or page>
+  - Evidence: <what each side rests on>
+  - status: <open|resolved>
+
 ## Cross-links
 
 - Related: [<Other Page>](/concepts/<other-page>.md)

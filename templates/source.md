@@ -27,6 +27,15 @@ sources:
 
 - <Known biases, outdated content, contradictions with other sources>
 
+## Contradictions
+
+<!-- Record disagreements here instead of averaging them away. Delete this
+     block if none. One entry per conflict; keep 'status' current. -->
+- **Claim:** <the statement that is disputed>
+  - Opposed by: <the competing claim, source, or page>
+  - Evidence: <what each side rests on>
+  - status: <open|resolved>
+
 ## Cross-links
 
 - [<Related entity/concept>](/entities/<related>.md)

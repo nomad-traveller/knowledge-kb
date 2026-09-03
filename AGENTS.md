@@ -12,7 +12,7 @@ Every wiki page represents an OKF concept formatted as a UTF-8 Markdown file wit
 
 | Key | Type / Allowed Values | Description   |
 | :---- | :---- | :---- |
-| type | Concept | Entity | Source Summary | Analysis | Reference | Playbook | Mandatory identifier for the category of the knowledge artifact. |
+| type | Concept | Entity | Source Summary | Analysis | Contradiction | Reference | Playbook | Mandatory identifier for the category of the knowledge artifact. |
 | title | String | Human-readable display title. |
 | description | String | Concise, one-sentence summary of the page content. |
 | tags | List of Strings | Categorization tags (e.g., \[idea, draft, book\]). |
@@ -42,6 +42,7 @@ Every wiki page represents an OKF concept formatted as a UTF-8 Markdown file wit
 | wiki/sources/ | Summaries of ingested sources from raw/. |
 | wiki/entities/ | Pages for individuals, organizations, and software tools. |
 | wiki/analyses/ | Detailed syntheses, comparisons, and chapter drafts. |
+| wiki/contradictions/ | Recorded disagreements; `type: Contradiction` pages. |
 
 ## **3\. Operational Workflows**
 
@@ -70,6 +71,27 @@ Every wiki page represents an OKF concept formatted as a UTF-8 Markdown file wit
 
 1. Read wiki/index.md first to identify relevant pages.  
 2. Synthesize the response using proper citations. If the synthesis provides durable value, save it as a new page in wiki/analyses/ using templates/analysis.md.
+
+### **E. Capturing Contradictions (mandatory)**
+
+A contradiction is any case where two claims in this vault cannot both be true.
+The most common kind is **agent-vs-self**: you ask the same question twice and
+get different answers. That is drift, and it must be captured, not smoothed over.
+
+1. **Check first:** grep `wiki/index.md` and run `python3 tools/okf.py contradictions`
+   for an existing open contradiction covering the same dispute. Extend it rather
+   than duplicating.
+2. **Small and local** (affects one page, changes no downstream conclusion):
+   add a `## Contradictions` entry to that page and set it `status: draft`.
+3. **Substantive** (load-bearing, spans pages, or any agent/self conflict):
+   copy `templates/contradiction.md` to `wiki/contradictions/<slug>.md`, fill in
+   **both** `claims` entries including `actor`, link from every affected page,
+   and demote those pages to `status: draft`.
+4. **Never average.** "Some say X, others say Y" destroys information. Record
+   both, leave `resolution: open`, and state what would settle it.
+5. **Log:** `YYYY-MM-DD | create | wiki/contradictions/<slug>.md | <note>`
+
+Full protocol: [Contradiction Protocol](/concepts/contradiction-protocol.md)
 
 ## **4\. Health Checks & Quality Constraints**
 
