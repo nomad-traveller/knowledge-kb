@@ -89,6 +89,12 @@ is safe."[^conversation]
   it behaves like class 2.
 - **Vault policy:** contested claims require a `scope` field — an unframed
   claim is an uncheckable claim.
+- **Vague predicates are the subclass that bites back:** for gradable words
+  ("a lot", "hot", "fast"), even identical frames may not dissolve the
+  conflict — the boundary is fuzzy (sorites). Evidence can never settle these;
+  only a stipulated threshold can, and that threshold *converts the claim's
+  class* to 2 or 1. Record the definition, do not keep the dispute open. See
+  [1000 EUR: a lot of money or not](/contradictions/thousand-euro-lot-of-money-example.md).
 
 ## Triage order (agent workflow)
 

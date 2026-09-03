@@ -108,11 +108,16 @@ leave it `open`.
 
 List everything open with: `python3 tools/okf.py contradictions`
 
-## Worked example
+## Worked examples
 
-The sky-colour case from this discussion, recorded as a Contradiction page with
-`class`/`scope` fields filled in: [Sky colour: blue vs grey](/contradictions/sky-blue-vs-grey-example.md)
-— a frame-variable apparent conflict resolved by parameterization, no winner
-declared. Copy its shape when filing your own.
+- [Sky colour: blue vs grey](/contradictions/sky-blue-vs-grey-example.md) —
+  frame-variable apparent conflict resolved by parameterization; no winner
+  declared.
+- [1000 EUR: a lot of money or not](/contradictions/thousand-euro-lot-of-money-example.md) —
+  the harder case: a *vague predicate* where even identical frames may not
+  dissolve the dispute; resolved by threshold-stipulation (class conversion),
+  not by evidence.
+
+Copy their shape when filing your own.
 
 [^okf-spec]: Open Knowledge Format v0.2 SPEC, §5 (provenance, trust, lifecycle).

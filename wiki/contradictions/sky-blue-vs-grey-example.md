@@ -78,3 +78,4 @@ mode the protocol warns about.
 
 - Protocol: [Contradiction Protocol](/concepts/contradiction-protocol.md)
 - Taxonomy: [Claim Classes and Contradictions](/analyses/claim-classes-and-contradictions.md)
+- Sibling example (harder case): [1000 EUR: a lot of money or not](/contradictions/thousand-euro-lot-of-money-example.md)

@@ -8,6 +8,7 @@ programmatically — one line per action, pipe-separated:
 ACTION is one of: create, update, deprecate, delete, ingest, rebuild, maintenance.
 Paths are bundle-relative (e.g. `wiki/concepts/foo.md`, `raw/foo.pdf`).
 
+2026-09-03 | create | wiki/contradictions/thousand-euro-lot-of-money-example.md | Worked example: vague-predicate conflict (gradable "a lot"), resolved by threshold-stipulation converting claim class; cross-linked.
 2026-09-03 | create | wiki/analyses/claim-classes-and-contradictions.md | Claim-class taxonomy (necessary / frame-fixed / frame-variable) with triage order and misclassification table.
 2026-09-03 | create | wiki/contradictions/sky-blue-vs-grey-example.md | Worked example: frame-variable apparent contradiction resolved by parameterization; golden reference for scope/class fields.
 2026-09-03 | maintenance | templates/contradiction.md | Added required scope and class fields to claims entries.

@@ -17,6 +17,7 @@
 ## Contradictions
 
 * ["Sky colour: blue vs grey"](contradictions/sky-blue-vs-grey-example.md) - Worked example of a frame-variable apparent contradiction, resolved by making the frame explicit rather than picking a winner.
+* ["1000 EUR: a lot of money or not"](contradictions/thousand-euro-lot-of-money-example.md) - Worked example of a frame-variable conflict over a gradable predicate, resolvable only by parameterization or by stipulating a threshold that converts the claim's class.
 
 ## Entities
 
