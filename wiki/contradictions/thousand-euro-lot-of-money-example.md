@@ -28,6 +28,10 @@ sources:
     title: Taxonomy test case from user
     author: human:user
     last_modified: 2026-09-03T00:00:00Z
+  - id: gatsby
+    resource: https://en.wikipedia.org/wiki/The_Great_Gatsby
+    title: "The Great Gatsby (1925), F. Scott Fitzgerald — opening narration"
+    author: human:fitzgerald
 ---
 
 # 1000 EUR: a lot of money or not
@@ -82,7 +86,11 @@ negligible against their normal. `scope` must therefore record *who* is
 comparing against *what baseline*, and `actor` becomes epistemically
 load-bearing: the same predicate flips class within one person over time (the
 self-made earner, now rich, says "trivial" — not dishonesty, a moved reference
-class).
+class). Fitzgerald's father had it first: *"Whenever you feel like criticizing
+anyone, just remember that all the people in this world haven't had the
+advantages that you've had"*[^gatsby] — the hidden parameter, named. And Nick's
+"inclined to reserve all judgments" is the human analogue of triage step 0:
+reconstruct the speaker's frame before adjudicating their claims.
 
 **Step 2 — the residual (why this case beats the sky example):** "a lot" has no
 sharp boundary. Two speakers with an identical complete frame can still
@@ -102,3 +110,6 @@ predicate, not a live dispute. Record the agreed definition instead of leaving
 - Protocol: [Contradiction Protocol](/concepts/contradiction-protocol.md)
 - Taxonomy: [Claim Classes and Contradictions](/analyses/claim-classes-and-contradictions.md)
 - Sibling example: [Sky colour: blue vs grey](/contradictions/sky-blue-vs-grey-example.md)
+
+[^conversation]: Session discussion on human contradiction detection and frames, 2026-09-03.
+[^gatsby]: F. Scott Fitzgerald, *The Great Gatsby* (1925), Chapter 1 — full text in `raw/gatsby-opening-quote.md`.

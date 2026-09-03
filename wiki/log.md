@@ -8,6 +8,8 @@ programmatically — one line per action, pipe-separated:
 ACTION is one of: create, update, deprecate, delete, ingest, rebuild, maintenance.
 Paths are bundle-relative (e.g. `wiki/concepts/foo.md`, `raw/foo.pdf`).
 
+2026-09-03 | ingest | raw/gatsby-opening-quote.md | Fitzgerald, The Great Gatsby (1925) ch.1 — reference-class passage, public domain; cited by thousand-euro example.
+2026-09-03 | update | wiki/contradictions/thousand-euro-lot-of-money-example.md | Added Gatsby citation (sources[] + footnote) as literary articulation of the reference-class problem.
 2026-09-03 | update | wiki/analyses/claim-classes-and-contradictions.md | Added reference-class rule: gradable predicates may index the speaker's biography; scope must record baseline, actor becomes epistemically load-bearing.
 2026-09-03 | update | wiki/contradictions/thousand-euro-lot-of-money-example.md | Adjudication step 1b: self-made vs rich-born anchors; class shifts within one person over time.
 2026-09-03 | maintenance | templates/contradiction.md | scope field now names speaker's reference class as part of the frame.
