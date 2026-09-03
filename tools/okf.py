@@ -264,6 +264,23 @@ def _contradiction_issues():
             if len(claims) < 2:
                 errors.append("%s is a Contradiction with %d claims (need >= 2)"
                               % (rel, len(claims)))
+            # scope/class fields: unframed claims are uncheckable claims
+            chunks = re.split(r"^\s*-\s+id:", claims_block, flags=re.M)[1:]
+            for i, chunk in enumerate(chunks, 1):
+                m_scope = re.search(r"^\s*scope:\s*(.+?)\s*(?:#.*)?$", chunk, re.M)
+                if not m_scope:
+                    errors.append("%s claim %d has no 'scope' field (frame required)"
+                                  % (rel, i))
+                elif m_scope.group(1).strip().lower() == "unspecified":
+                    warnings.append("%s claim %d scope is 'unspecified' (underspecified — cannot adjudicate)"
+                                    % (rel, i))
+                m_cls = re.search(r"^\s*class:\s*(.+?)\s*$", chunk, re.M)
+                if not m_cls:
+                    errors.append("%s claim %d has no 'class' field (necessary|frame-fixed|frame-variable)"
+                                  % (rel, i))
+                elif m_cls.group(1).strip().lower() == "necessary":
+                    warnings.append("%s claim %d is a necessary claim — a conflict here is an ERROR; amend/supersede instead of leaving open"
+                                    % (rel, i))
             res = str(fm.get("resolution", "")).strip().lower()
             if res == "resolved" and not str(fm.get("resolved_by", "")).strip():
                 errors.append("%s is resolved but has no 'resolved_by'" % rel)

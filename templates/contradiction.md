@@ -10,11 +10,15 @@ claims:
   - id: <claim-a>
     statement: <the claim as made>
     source: <sources[].id or page path>
+    scope: <frame: when / where / conditions / definition-version>   # required; if unknown: "unspecified"
+    class: <necessary|frame-fixed|frame-variable>
     actor: <who/what asserted it, e.g. agent/hy4-preview>
     at: <ISO8601Z>
   - id: <claim-b>
     statement: <the competing claim>
     source: <sources[].id or page path>
+    scope: <frame for this claim>
+    class: <necessary|frame-fixed|frame-variable>
     actor: <who/what asserted it>
     at: <ISO8601Z>
 resolution: <open|resolved>          # open until adjudicated

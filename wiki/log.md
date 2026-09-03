@@ -8,6 +8,11 @@ programmatically — one line per action, pipe-separated:
 ACTION is one of: create, update, deprecate, delete, ingest, rebuild, maintenance.
 Paths are bundle-relative (e.g. `wiki/concepts/foo.md`, `raw/foo.pdf`).
 
+2026-09-03 | create | wiki/analyses/claim-classes-and-contradictions.md | Claim-class taxonomy (necessary / frame-fixed / frame-variable) with triage order and misclassification table.
+2026-09-03 | create | wiki/contradictions/sky-blue-vs-grey-example.md | Worked example: frame-variable apparent contradiction resolved by parameterization; golden reference for scope/class fields.
+2026-09-03 | maintenance | templates/contradiction.md | Added required scope and class fields to claims entries.
+2026-09-03 | maintenance | tools/okf.py | lint now checks scope/class presence, flags unspecified scope, warns on class:necessary pages left open.
+2026-09-03 | update | wiki/concepts/contradiction-protocol.md | Workflow step 0: classify before capture; added worked-example link.
 2026-09-03 | create | wiki/concepts/contradiction-protocol.md | Added the contradiction protocol: capture disagreements instead of averaging them; agent-vs-self drift always gets a page.
 2026-09-03 | create | templates/contradiction.md | New page type for substantive conflicts; frontmatter carries both claims with the actor that asserted each.
 2026-09-03 | maintenance | templates/ | Added a '## Contradictions' section to concept, source, entity and analysis skeletons.

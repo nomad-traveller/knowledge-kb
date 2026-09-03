@@ -65,15 +65,24 @@ Three distinct kinds of contradiction, which need different handling:
 
 ## Workflow
 
-1. **Detect** — a new answer conflicts with something already in the vault.
-2. **Check** — search `wiki/index.md` and grep for `resolution: open` first.
+0. **Classify first** — decide the claim class of the conflict (see
+   [Claim Classes and Contradictions](/analyses/claim-classes-and-contradictions.md)):
+   - *Necessary* (frame-free: math, definitions) → not a contradiction, it's an
+     **error** — fix the wrong page, never open a contradiction record.
+   - *Frame-fixed* (same shared world-state, both checkable) → a real dispute;
+     proceed below.
+   - *Frame-variable* (different time/place/conditions/definition) → **no
+     contradiction**: parameterize both claims with explicit `scope` and keep both.
+   If the frame cannot be established, that is an underspecification defect:
+   flag the missing scope and set `status: draft`, do not file a dispute.
+1. **Check** — search `wiki/index.md` and grep for `resolution: open` first.
    An existing open contradiction may already cover it; extend rather than duplicate.
-3. **Capture** — inline entry, or copy `templates/contradiction.md` to
+2. **Capture** — inline entry, or copy `templates/contradiction.md` to
    `wiki/contradictions/<slug>.md`.
-4. **Demote** — set affected pages to `status: draft`.
-5. **Link** — add a cross-link from every affected page to the Contradiction page.
-6. **Log** — `YYYY-MM-DD | create | wiki/contradictions/<slug>.md | <note>`
-7. **Rebuild** — `python3 tools/okf.py rebuild-index`
+3. **Demote** — set affected pages to `status: draft`.
+4. **Link** — add a cross-link from every affected page to the Contradiction page.
+5. **Log** — `YYYY-MM-DD | create | wiki/contradictions/<slug>.md | <note>`
+6. **Rebuild** — `python3 tools/okf.py rebuild-index`
 
 ## Adjudicating
 
@@ -98,5 +107,12 @@ leave it `open`.
 - pages carrying inline contradictions but still `status: stable`
 
 List everything open with: `python3 tools/okf.py contradictions`
+
+## Worked example
+
+The sky-colour case from this discussion, recorded as a Contradiction page with
+`class`/`scope` fields filled in: [Sky colour: blue vs grey](/contradictions/sky-blue-vs-grey-example.md)
+— a frame-variable apparent conflict resolved by parameterization, no winner
+declared. Copy its shape when filing your own.
 
 [^okf-spec]: Open Knowledge Format v0.2 SPEC, §5 (provenance, trust, lifecycle).

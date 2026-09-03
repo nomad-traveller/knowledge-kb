@@ -5,6 +5,7 @@
 
 ## Analyses
 
+* [Claim Classes and Contradictions](analyses/claim-classes-and-contradictions.md) - A taxonomy of contradictions by claim modality — necessary, frame-fixed, frame-variable — and what each class implies for detection and resolution in this vault.
 * [Knowledge Collaboration Workflow](analyses/knowledge-collaboration-summary.md) - Summary of how the team organizes per-topic knowledge vaults using Hermes + OKF template
 
 ## Concepts
@@ -12,6 +13,10 @@
 * [Contradiction Protocol](concepts/contradiction-protocol.md) - How this vault captures, adjudicates, and resolves disagreements between sources, agents, and pages instead of averaging them away.
 * [LLM Wiki Pattern](concepts/llm-wiki-pattern.md) - Karpathy's pattern for a persistent, LLM-maintained interlinked wiki that compounds knowledge over time.
 * [Open Knowledge Format (OKF)](concepts/open-knowledge-format.md) - Google's open, human- and agent-friendly format for knowledge bundles (markdown + YAML frontmatter).
+
+## Contradictions
+
+* ["Sky colour: blue vs grey"](contradictions/sky-blue-vs-grey-example.md) - Worked example of a frame-variable apparent contradiction, resolved by making the frame explicit rather than picking a winner.
 
 ## Entities
 
